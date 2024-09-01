@@ -1,6 +1,6 @@
 <template>
     <div>
-      Lively
+      Lively - Nuxt
     </div>
   </template>
   
