@@ -1,7 +1,9 @@
 <template>
-    <main class="w-full h-full">
+    <main class="w-full h-screen bg-black">
         <MainHeader />
-        <slot />
+        <PageWrapper>
+            <slot />
+        </PageWrapper>
     </main>
 </template>
     
