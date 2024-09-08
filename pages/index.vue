@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import houseImage from '~/assets/images/house.jpg';
+
+ const backgroundImage = `url(${houseImage})`
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="flex-1 p-4">
@@ -9,7 +15,7 @@
         But check Agencies
       </NuxtLink>
     </div>
-    <div :style="{ backgroundImage: `url(https://images.unsplash.com/photo-1591154669695-5f2a8d20c089` }" class="flex-1 bg-center bg-cover bg-no-repeat"></div>
+    <div :style="{ backgroundImage }" class="flex-1 bg-center bg-cover bg-no-repeat"></div>
 </div>
 </template>
   
