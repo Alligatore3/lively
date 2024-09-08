@@ -1,6 +1,3 @@
 <template>
-    <nav>
-        This is header
-    </nav>
+  <nav>This is header</nav>
 </template>
-  
