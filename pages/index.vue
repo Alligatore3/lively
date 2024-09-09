@@ -6,10 +6,11 @@ const backgroundImage = `url(${houseImage})`;
 
 <template>
   <div class="flex h-full">
-    <div class="flex-1 p-4">
-      <p>Lively - Nuxt</p>
-
-      <NuxtLink to="/agencies"> But check Agencies </NuxtLink>
+    <div class="flex-1 p-16">
+      <h3 class="font-bold text-8xl" v-html="$t('home.title')" />
+      <p class="max-w-[560px] my-4 text-2xl">
+        {{ $t('home.description') }}
+      </p>
     </div>
     <div :style="{ backgroundImage }" class="flex-1 bg-center bg-cover bg-no-repeat"></div>
   </div>
