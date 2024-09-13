@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import houseImage from '~/assets/images/house.jpg';
+import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
 </script>
