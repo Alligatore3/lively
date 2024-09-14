@@ -1,8 +1,10 @@
 <template>
   <main class="w-full h-screen bg-black">
     <MainHeader />
-    <PageWrapper>
-      <slot />
-    </PageWrapper>
+    <div class="container mx-auto h-full">
+      <PageWrapper>
+        <slot />
+      </PageWrapper>
+    </div>
   </main>
 </template>
