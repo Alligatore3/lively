@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const route = useRoute();
+
 const type = ref<'buy' | 'rent' | null>(null);
 
 const location = ref<string | null>(null);
@@ -17,6 +19,8 @@ function initPropertiesSearch() {
   type.value = urlParams.get('type') as 'buy' | 'rent';
   location.value = urlParams.get('location');
 }
+
+watch(() => route.fullPath, initPropertiesSearch);
 
 onMounted(initPropertiesSearch);
 </script>
