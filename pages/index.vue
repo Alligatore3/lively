@@ -41,16 +41,23 @@ function onSubmit() {
             <div class="divider"></div>
 
             <div class="flex flex-1 flex-col px-4">
-              <label for="type" class="font-semibold">
+              <label for="location" class="font-semibold">
                 {{ $t('home.form.location.label') }}
+                <input :placeholder="$t('home.form.location.placeholder')" type="text" id="location" name="location" />
               </label>
             </div>
 
             <div class="divider"></div>
 
             <div class="flex flex-1 flex-col px-4">
-              <label for="type" class="font-semibold">
+              <label for="priceRange" class="font-semibold">
                 {{ $t('home.form.priceRange.label') }}
+                <input
+                  :placeholder="$t('home.form.priceRange.placeholder')"
+                  name="priceRange"
+                  id="priceRange"
+                  type="text"
+                />
               </label>
             </div>
 

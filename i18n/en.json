@@ -16,10 +16,12 @@
         }
       },
       "location": {
-        "label": "Location"
+        "label": "Location",
+        "placeholder": "Choose a city/region"
       },
       "priceRange": {
-        "label": "Price range"
+        "label": "Price range",
+        "placeholder": "300-700$"
       }
     }
   }
