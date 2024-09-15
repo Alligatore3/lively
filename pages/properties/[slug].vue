@@ -41,6 +41,9 @@ const items = [
   },
 ];
 
+/**
+ * @see https://flowbite.com/docs/components/gallery/#masonry-grid
+ */
 function chunkArray(items: { src: string }[], chunkSize = 3) {
   const chunks = [];
   let i = 0;
