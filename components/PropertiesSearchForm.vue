@@ -1,9 +1,17 @@
 <script setup lang="ts">
+type Props = {
+  onSubmit: () => void;
+};
+
+const { onSubmit } = defineProps<Props>();
+
 const formId = 'home-search-form';
 
-function onSubmit() {
-  console.log('preve');
-}
+const type = ref<'buy' | 'rent'>('buy');
+
+const location = ref<string | null>(null);
+
+const priceRange = ref<number | null>(null);
 </script>
 
 <template>
@@ -13,7 +21,7 @@ function onSubmit() {
         <label for="type" class="font-semibold">
           {{ $t('home.form.type.label') }}
         </label>
-        <select name="type" id="type" :form="formId">
+        <select v-model="type" name="type" id="type" :form="formId">
           <option value="buy">
             {{ $t('home.form.type.values.buy') }}
           </option>
@@ -28,7 +36,14 @@ function onSubmit() {
       <div class="flex flex-1 flex-col px-4">
         <label for="location" class="font-semibold">
           {{ $t('home.form.location.label') }}
-          <input :placeholder="$t('home.form.location.placeholder')" type="text" id="location" name="location" />
+          <input
+            :placeholder="$t('home.form.location.placeholder')"
+            v-model="location"
+            name="location"
+            :form="formId"
+            id="location"
+            type="text"
+          />
         </label>
       </div>
 
@@ -37,7 +52,14 @@ function onSubmit() {
       <div class="flex flex-1 flex-col px-4">
         <label for="priceRange" class="font-semibold">
           {{ $t('home.form.priceRange.label') }}
-          <input :placeholder="$t('home.form.priceRange.placeholder')" name="priceRange" id="priceRange" type="text" />
+          <input
+            :placeholder="$t('home.form.priceRange.placeholder')"
+            v-model="priceRange"
+            name="priceRange"
+            id="priceRange"
+            :form="formId"
+            type="number"
+          />
         </label>
       </div>
 

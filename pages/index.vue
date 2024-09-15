@@ -3,6 +3,21 @@ import PropertiesSearchForm from '@/components/PropertiesSearchForm';
 import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
+
+function onSubmit(values: { target: HTMLFormElement }) {
+  const form = new FormData(values.target);
+
+  const type = form.get('type');
+
+  const location = form.get('location');
+
+  const priceRange = form.get('priceRange');
+  console.log({
+    type,
+    location,
+    priceRange,
+  });
+}
 </script>
 
 <template>
@@ -17,7 +32,7 @@ const backgroundImage = `url(${houseImage})`;
 
         <div class="flex-1"></div>
 
-        <PropertiesSearchForm />
+        <PropertiesSearchForm :onSubmit="onSubmit" />
       </div>
     </div>
   </div>
