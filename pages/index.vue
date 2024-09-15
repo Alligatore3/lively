@@ -7,15 +7,19 @@ const backgroundImage = `url(${houseImage})`;
 function onSubmit(values: { target: HTMLFormElement }) {
   const form = new FormData(values.target);
 
-  const type = form.get('type');
+  const location: string | undefined = String(form.get('location')) || undefined;
 
-  const location = form.get('location');
+  const type: string | undefined = String(form.get('type')) || undefined;
 
-  const priceRange = form.get('priceRange');
-  console.log({
-    type,
-    location,
-    priceRange,
+  const priceRange = Number(form.get('priceRange')) || undefined;
+
+  navigateTo({
+    path: '/properties',
+    query: {
+      priceRange,
+      location,
+      type,
+    },
   });
 }
 </script>
