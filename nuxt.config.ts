@@ -17,7 +17,14 @@ export default defineNuxtConfig({
       },
     ],
     '@nuxtjs/i18n',
+    'nuxt-snackbar',
+    'nuxt-snackbar',
   ],
+  snackbar: {
+    duration: 5000,
+    bottom: true,
+    right: true,
+  },
   i18n: {
     vueI18n: './i18n.config.ts', // if you are using custom path, default
   },
