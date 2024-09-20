@@ -27,7 +27,7 @@ function onSubmit(values: { target: HTMLFormElement }) {
 }
 
 onMounted(async () => {
-  const { data, error } = await useFetch(generateLivelyEndpoint('hello/clientdd'));
+  const { data, error } = await useFetch(generateLivelyEndpoint('hello/client'));
 
   if (error.value) {
     const text = error.value as unknown as string;
