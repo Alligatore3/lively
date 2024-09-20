@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import PropertiesSearchForm from '@/components/PropertiesSearchForm';
-import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
+import { useLivelyStore } from '@/stores/useLivelyStore';
 import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
 
-const snackbar = useSnackbar();
+const { initHelloClient } = useLivelyStore();
 
 function onSubmit(values: { target: HTMLFormElement }) {
   const form = new FormData(values.target);
@@ -26,18 +26,7 @@ function onSubmit(values: { target: HTMLFormElement }) {
   });
 }
 
-onMounted(async () => {
-  const { data, error } = await useFetch(generateLivelyEndpoint('hello/client'));
-
-  if (error.value) {
-    const text = error.value as unknown as string;
-
-    snackbar.add({
-      type: 'error',
-      text,
-    });
-  }
-});
+onMounted(initHelloClient);
 </script>
 
 <template>
