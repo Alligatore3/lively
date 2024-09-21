@@ -7,13 +7,13 @@ import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
 
-const { getLocationList } = useLivelyStore();
+const { getLocationList, propertyLocationList } = useLivelyStore();
 
 const isLoading = ref<boolean>(false);
 
 const propertyType = ref<PropertyType>(DEFAULT_PROPERTY_TYPE);
 
-const propertyLocation = ref<string | null>(null);
+const propertyLocation = ref<number | null>(null);
 
 const propertyPriceRange = ref<number | null>(null);
 
@@ -51,6 +51,7 @@ onMounted(() => {
           v-model:property-price-range="propertyPriceRange"
           v-model:property-location="propertyLocation"
           v-model:property-type="propertyType"
+          :locations="propertyLocationList"
           :isLoading="isLoading"
           :onSubmit="onSubmit"
         />

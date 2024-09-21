@@ -57,5 +57,5 @@ export function useLivelyStore() {
     });
   }
 
-  return { token, initHelloClient, getLocationList };
+  return { propertyLocationList, initHelloClient, getLocationList };
 }

@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
 
 type Props = {
+  locations?: PropertyLocation[];
   onSubmit: () => void;
   isLoading: boolean;
 };
 
-const { onSubmit, isLoading } = defineProps<Props>();
+defineProps<Props>();
 
 const propertyType = defineModel<PropertyType>('propertyType');
 
-const propertyLocation = defineModel<string | null>('propertyLocation');
+const propertyLocation = defineModel<number | null>('propertyLocation');
 
 const propertyPriceRange = defineModel<number | null>('propertyPriceRange');
 
@@ -39,16 +41,12 @@ const formId = 'home-search-form';
       <div class="flex flex-1 flex-col px-4">
         <label for="location" class="font-semibold">
           {{ $t('home.form.location.label') }}
-          <input
-            :placeholder="$t('home.form.location.placeholder')"
-            v-model="propertyLocation"
-            :disabled="isLoading"
-            name="location"
-            :form="formId"
-            id="location"
-            type="text"
-          />
         </label>
+        <select v-model="propertyLocation" name="location" id="location" :form="formId" :disabled="isLoading">
+          <option :key="location.id" v-for="location in locations" :value="location.id">
+            {{ location.name }}
+          </option>
+        </select>
       </div>
 
       <div class="divider"></div>
