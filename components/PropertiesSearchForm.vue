@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DEFAULT_PROPERTY_TYPE } from '@/constants';
+import type { PropertyType } from '@/types/PropertyType';
 
 type Props = {
   onSubmit: () => void;
@@ -7,13 +7,13 @@ type Props = {
 
 const { onSubmit } = defineProps<Props>();
 
+const propertyType = defineModel<PropertyType>('propertyType');
+
+const propertyLocation = defineModel<string | null>('propertyLocation');
+
+const propertyPriceRange = defineModel<number | null>('propertyPriceRange');
+
 const formId = 'home-search-form';
-
-const type = ref<'buy' | 'rent'>(DEFAULT_PROPERTY_TYPE);
-
-const location = ref<string | null>(null);
-
-const priceRange = ref<number | null>(null);
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const priceRange = ref<number | null>(null);
         <label for="type" class="font-semibold">
           {{ $t('home.form.type.label') }}
         </label>
-        <select v-model="type" name="type" id="type" :form="formId">
+        <select v-model="propertyType" name="type" id="type" :form="formId">
           <option value="buy">
             {{ $t('home.form.type.values.buy') }}
           </option>
@@ -40,7 +40,7 @@ const priceRange = ref<number | null>(null);
           {{ $t('home.form.location.label') }}
           <input
             :placeholder="$t('home.form.location.placeholder')"
-            v-model="location"
+            v-model="propertyLocation"
             name="location"
             :form="formId"
             id="location"
@@ -56,7 +56,7 @@ const priceRange = ref<number | null>(null);
           {{ $t('home.form.priceRange.label') }}
           <input
             :placeholder="$t('home.form.priceRange.placeholder')"
-            v-model="priceRange"
+            v-model="propertyPriceRange"
             name="priceRange"
             id="priceRange"
             :form="formId"

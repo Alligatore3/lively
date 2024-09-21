@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PropertiesSearchForm from '@/components/PropertiesSearchForm';
+import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import { DEFAULT_PROPERTY_TYPE } from '@/constants';
 import houseImage from '~/assets/images/house.png';
@@ -8,26 +9,26 @@ const backgroundImage = `url(${houseImage})`;
 
 const { getLocationList } = useLivelyStore();
 
-function onSubmit(values: { target: HTMLFormElement }) {
-  const form = new FormData(values.target);
+const propertyType = ref<PropertyType>(DEFAULT_PROPERTY_TYPE);
 
-  const location: string | undefined = String(form.get('location')) || undefined;
+const propertyLocation = ref<string | null>(null);
 
-  const type: string | undefined = String(form.get('type')) || undefined;
+const propertyPriceRange = ref<number | null>(null);
 
-  const priceRange = Number(form.get('priceRange')) || undefined;
-
+function onSubmit() {
   navigateTo({
     path: '/properties',
     query: {
-      priceRange,
-      location,
-      type,
+      priceRange: propertyPriceRange.value,
+      location: propertyLocation.value,
+      type: propertyType.value,
     },
   });
 }
 
-onMounted(() => getLocationList(DEFAULT_PROPERTY_TYPE));
+console.log(12, propertyPriceRange.value);
+
+// onMounted(() => getLocationList(propertyTypeModel.value));
 </script>
 
 <template>
@@ -42,7 +43,12 @@ onMounted(() => getLocationList(DEFAULT_PROPERTY_TYPE));
 
         <div class="flex-1"></div>
 
-        <PropertiesSearchForm :onSubmit="onSubmit" />
+        <PropertiesSearchForm
+          v-model:property-price-range="propertyPriceRange"
+          v-model:property-location="propertyLocation"
+          v-model:property-type="propertyType"
+          :onSubmit="onSubmit"
+        />
       </div>
     </div>
   </div>
