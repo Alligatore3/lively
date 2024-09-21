@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useLivelyStore } from '@/stores/useLivelyStore';
 
-const { token } = useLivelyStore();
+const { initHelloClient } = useLivelyStore();
+
+onMounted(initHelloClient);
 </script>
 
 <template>
@@ -9,7 +11,6 @@ const { token } = useLivelyStore();
     <MainHeader />
     <div class="container mx-auto h-full">
       <PageWrapper>
-        <code>Token is: {{ token }}</code>
         <slot />
       </PageWrapper>
     </div>

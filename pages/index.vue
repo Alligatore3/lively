@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import PropertiesSearchForm from '@/components/PropertiesSearchForm';
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import { DEFAULT_PROPERTY_TYPE } from '@/constants';
 import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
 
-const { initHelloClient } = useLivelyStore();
+const { getLocationList } = useLivelyStore();
 
 function onSubmit(values: { target: HTMLFormElement }) {
   const form = new FormData(values.target);
@@ -26,7 +27,7 @@ function onSubmit(values: { target: HTMLFormElement }) {
   });
 }
 
-onMounted(initHelloClient);
+onMounted(() => getLocationList(DEFAULT_PROPERTY_TYPE));
 </script>
 
 <template>

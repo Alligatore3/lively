@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DEFAULT_PROPERTY_TYPE } from '@/constants';
+
 type Props = {
   onSubmit: () => void;
 };
@@ -7,7 +9,7 @@ const { onSubmit } = defineProps<Props>();
 
 const formId = 'home-search-form';
 
-const type = ref<'buy' | 'rent'>('buy');
+const type = ref<'buy' | 'rent'>(DEFAULT_PROPERTY_TYPE);
 
 const location = ref<string | null>(null);
 
