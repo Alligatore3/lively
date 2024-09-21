@@ -9,6 +9,8 @@ const backgroundImage = `url(${houseImage})`;
 
 const { getLocationList } = useLivelyStore();
 
+const isLoading = ref<boolean>(false);
+
 const propertyType = ref<PropertyType>(DEFAULT_PROPERTY_TYPE);
 
 const propertyLocation = ref<string | null>(null);
@@ -26,9 +28,11 @@ function onSubmit() {
   });
 }
 
-console.log(12, propertyPriceRange.value);
-
-// onMounted(() => getLocationList(propertyTypeModel.value));
+onMounted(() => {
+  isLoading.value = true;
+  getLocationList(propertyType.value);
+  isLoading.value = false;
+});
 </script>
 
 <template>
@@ -47,6 +51,7 @@ console.log(12, propertyPriceRange.value);
           v-model:property-price-range="propertyPriceRange"
           v-model:property-location="propertyLocation"
           v-model:property-type="propertyType"
+          :isLoading="isLoading"
           :onSubmit="onSubmit"
         />
       </div>

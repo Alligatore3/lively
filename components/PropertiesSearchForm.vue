@@ -3,9 +3,10 @@ import type { PropertyType } from '@/types/PropertyType';
 
 type Props = {
   onSubmit: () => void;
+  isLoading: boolean;
 };
 
-const { onSubmit } = defineProps<Props>();
+const { onSubmit, isLoading } = defineProps<Props>();
 
 const propertyType = defineModel<PropertyType>('propertyType');
 
@@ -23,7 +24,7 @@ const formId = 'home-search-form';
         <label for="type" class="font-semibold">
           {{ $t('home.form.type.label') }}
         </label>
-        <select v-model="propertyType" name="type" id="type" :form="formId">
+        <select v-model="propertyType" name="type" id="type" :form="formId" :disabled="isLoading">
           <option value="buy">
             {{ $t('home.form.type.values.buy') }}
           </option>
@@ -41,6 +42,7 @@ const formId = 'home-search-form';
           <input
             :placeholder="$t('home.form.location.placeholder')"
             v-model="propertyLocation"
+            :disabled="isLoading"
             name="location"
             :form="formId"
             id="location"
@@ -57,6 +59,7 @@ const formId = 'home-search-form';
           <input
             :placeholder="$t('home.form.priceRange.placeholder')"
             v-model="propertyPriceRange"
+            :disabled="isLoading"
             name="priceRange"
             id="priceRange"
             :form="formId"
@@ -65,7 +68,10 @@ const formId = 'home-search-form';
         </label>
       </div>
 
-      <button type="submit" class="rounded-full bg-black w-12 h-12">🔎</button>
+      <div v-if="isLoading" class="rounded-full bg-black w-12 h-12">
+        <Spinner />
+      </div>
+      <button v-else type="submit" class="rounded-full bg-black w-12 h-12">🔎</button>
     </div>
   </form>
 </template>

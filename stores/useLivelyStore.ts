@@ -1,4 +1,5 @@
 import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
+import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
 import { isString } from '@/utils/isString';
 
@@ -8,6 +9,8 @@ export function useLivelyStore() {
   const snackbar = useSnackbar();
 
   const token = useState<string | null>('tokenRequest', () => localStorage.getItem(localStorageTokenKey));
+
+  const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
 
   function onResponseError({ error }: { error: string | Record<string, string> }) {
     const text = isString(error) ? error : error.message;
@@ -36,13 +39,19 @@ export function useLivelyStore() {
   }
 
   async function getLocationList(type: PropertyType) {
+    if (propertyLocationList.value.length > 0) return;
+
+    await initHelloClient();
+
     await useFetch(generateLivelyEndpoint('location/list'), {
       body: { token, type },
       method: 'post',
       onResponseError,
-      onResponse({ response }) {
+      async onResponse({ response }) {
         if (response.status === 400) {
           onResponseError({ error: response.statusText });
+        } else {
+          propertyLocationList.value = response._data.locations;
         }
       },
     });
