@@ -47,7 +47,7 @@ export function useLivelyStore() {
       body: { token, type },
       method: 'post',
       onResponseError,
-      async onResponse({ response }) {
+      onResponse({ response }) {
         if (response.status === 400) {
           onResponseError({ error: response.statusText });
         } else {
