@@ -10,6 +10,8 @@ export function useLivelyStore() {
 
   const token = useState<string | null>('tokenRequest', () => localStorage.getItem(localStorageTokenKey));
 
+  const isLoading = useState<boolean>('isLoading', () => false);
+
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
 
   function onResponseError({ error }: { error: string | Record<string, string> }) {
@@ -39,7 +41,9 @@ export function useLivelyStore() {
   }
 
   async function getLocationList(type: PropertyType) {
-    if (propertyLocationList.value.length > 0) return;
+    if (isLoading.value) return;
+
+    isLoading.value = true;
 
     await initHelloClient();
 
@@ -55,6 +59,8 @@ export function useLivelyStore() {
         }
       },
     });
+
+    isLoading.value = false;
   }
 
   return { propertyLocationList, initHelloClient, getLocationList };

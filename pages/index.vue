@@ -28,11 +28,17 @@ function onSubmit() {
   });
 }
 
-onMounted(() => {
+async function fetchLocationsByType() {
+  if (!propertyType.value) return;
+
   isLoading.value = true;
-  getLocationList(propertyType.value);
+  await getLocationList(propertyType.value);
   isLoading.value = false;
-});
+}
+
+watch(propertyType, fetchLocationsByType);
+
+onMounted(fetchLocationsByType);
 </script>
 
 <template>
