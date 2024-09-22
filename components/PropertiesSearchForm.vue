@@ -43,6 +43,7 @@ const formId = 'home-search-form';
           {{ $t('home.form.location.label') }}
         </label>
         <select v-model="propertyLocation" name="location" id="location" :form="formId" :disabled="isLoading">
+          <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
           <option :key="location.id" v-for="location in locations" :value="location.id">
             {{ location.name }}
           </option>
