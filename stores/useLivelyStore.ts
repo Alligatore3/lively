@@ -8,8 +8,6 @@ const localStorageTokenKey = 'LivelyToken';
 export function useLivelyStore() {
   const snackbar = useSnackbar();
 
-  const token = useState<string | null>('tokenRequest', () => localStorage.getItem(localStorageTokenKey));
-
   const isLoading = useState<boolean>('isLoading', () => false);
 
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
@@ -24,6 +22,8 @@ export function useLivelyStore() {
   }
 
   async function initHelloClient() {
+    const token = localStorage.getItem(localStorageTokenKey);
+
     if (isString(token)) return;
 
     await useFetch(generateLivelyEndpoint('hello/client'), {
@@ -33,7 +33,6 @@ export function useLivelyStore() {
         if (response.status === 400) {
           onResponseError({ error: response.statusText });
         } else {
-          token.value = response._data.token;
           localStorage.setItem(localStorageTokenKey, response._data.token);
         }
       },
@@ -46,6 +45,8 @@ export function useLivelyStore() {
     isLoading.value = true;
 
     await initHelloClient();
+
+    const token = localStorage.getItem(localStorageTokenKey);
 
     await useFetch(generateLivelyEndpoint('location/list'), {
       body: { token, type },
