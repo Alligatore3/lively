@@ -4,8 +4,8 @@ const livelyDescription =
   'Lively can help you rent, sell, or buy accomodation, take a mortage, invest in real estate, and a lot more';
 
 useHead({
-  title: livelyTitle,
   link: [{ href: 'favicon.png', type: 'image/png', rel: 'icon' }],
+  title: livelyTitle,
   meta: [
     {
       content: livelyDescription,
