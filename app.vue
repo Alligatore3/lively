@@ -1,14 +1,22 @@
 <script setup lang="ts">
+const livelyTitle = 'Lively - Real Estate Platform';
+const livelyDescription =
+  'Lively can help you rent, sell, or buy accomodation, take a mortage, invest in real estate, and a lot more';
+
 useHead({
-  title: 'Lively - Real Estate Platform',
+  title: livelyTitle,
   link: [{ href: 'favicon.png', type: 'image/png', rel: 'icon' }],
   meta: [
     {
+      content: livelyDescription,
       name: 'description',
-      content:
-        'Lively can help you rent, sell, or buy accomodation, take a mortage, invest in real estate, and a lot more',
     },
   ],
+});
+
+useSeoMeta({
+  description: livelyDescription,
+  title: livelyTitle,
 });
 </script>
 
