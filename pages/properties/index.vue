@@ -26,15 +26,17 @@ onMounted(initPropertiesSearch);
 </script>
 
 <template>
-  <div class="p-4">
-    <h1>Lively - Properties</h1>
+  <ContentWithFilters>
+    <div>
+      <h1>Lively - Properties</h1>
 
-    Current search:
-    <br />
-    <code>priceRange: {{ priceRange || 'Not defined' }} </code>
-    <br />
-    <code>location: {{ location || 'Not defined' }} </code>
-    <br />
-    <code>type: {{ type }} </code>
-  </div>
+      Current search:
+      <br />
+      <code>priceRange: {{ priceRange || 'Not defined' }} </code>
+      <br />
+      <code>location: {{ location || 'Not defined' }} </code>
+      <br />
+      <code>type: {{ type }} </code>
+    </div>
+  </ContentWithFilters>
 </template>
