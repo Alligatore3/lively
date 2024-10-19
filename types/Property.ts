@@ -5,4 +5,5 @@ export type Property = {
   bedroom: number;
   rooms: number;
   mq: number;
+  id: string;
 };

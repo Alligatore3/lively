@@ -1,42 +1,26 @@
 <script setup lang="ts">
-const route = useRoute();
+import { createPropertyMock } from '@/utils/createPropertyMock';
 
-const type = ref<'buy' | 'rent' | null>(null);
-
-const location = ref<string | null>(null);
-
-const priceRange = ref<number | null>(null);
-
-/**
- * @todo 'useRoute' is not updating values.
- */
-function initPropertiesSearch() {
-  const queryString = window.location.search;
-
-  const urlParams = new URLSearchParams(queryString);
-
-  priceRange.value = Number(urlParams.get('priceRange'));
-  type.value = urlParams.get('type') as 'buy' | 'rent';
-  location.value = urlParams.get('location');
-}
-
-watch(() => route.fullPath, initPropertiesSearch);
-
-onMounted(initPropertiesSearch);
+const properties = [
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+  createPropertyMock(),
+];
 </script>
 
 <template>
   <ContentWithFilters>
-    <div>
-      <h1>Lively - Properties</h1>
-
-      Current search:
-      <br />
-      <code>priceRange: {{ priceRange || 'Not defined' }} </code>
-      <br />
-      <code>location: {{ location || 'Not defined' }} </code>
-      <br />
-      <code>type: {{ type }} </code>
+    <div class="grid grid-rows-3 grid-flow-col gap-3">
+      <PropertyCard v-for="property in properties" :key="property.id" :property="property" />
     </div>
   </ContentWithFilters>
 </template>

@@ -24,5 +24,8 @@
         "placeholder": "300-700$"
       }
     }
+  },
+  "properties": {
+    "cardFooter": "{bedroom} bedrooms - {rooms} rooms - {mq} Sq. ft"
   }
 }
