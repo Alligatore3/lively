@@ -20,7 +20,13 @@ const properties = [
 <template>
   <ContentWithFilters>
     <div class="grid grid-rows-3 grid-flow-col gap-3">
-      <PropertyCard v-for="property in properties" :key="property.id" :property="property" />
+      <NuxtLink
+        :to="{ name: 'properties-id', params: { id: property.id } }"
+        v-for="property in properties"
+        :key="property.id"
+      >
+        <PropertyCard :property="property" />
+      </NuxtLink>
     </div>
   </ContentWithFilters>
 </template>
