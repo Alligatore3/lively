@@ -25,13 +25,13 @@ const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
 const gridClasses = computed<string[]>(() => {
   const deafultClasses = ['my-4 transition-all duration-300 ease-in-out'];
 
-  return gridLayout.value === 'grid'
+  return isGridLayout.value
     ? [...deafultClasses, 'grid grid-rows-3 grid-flow-col gap-3']
     : [...deafultClasses, 'flex gap-4 flex-col w-full'];
 });
 
 function toggleLayout() {
-  gridLayout.value = gridLayout.value === 'grid' ? 'list' : 'grid';
+  gridLayout.value = isGridLayout.value ? 'list' : 'grid';
 }
 </script>
 
