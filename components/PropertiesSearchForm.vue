@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
+import LensIcon from '@/components/icons/LensIcon';
 
 type Props = {
   locations?: PropertyLocation[];
@@ -70,7 +71,9 @@ const formId = 'home-search-form';
       <div v-if="isLoading" class="rounded-full bg-black w-12 h-12">
         <Spinner />
       </div>
-      <button v-else type="submit" class="rounded-full bg-black w-12 h-12">🔎</button>
+      <button v-else type="submit" class="rounded-full bg-black w-12 h-12 text-white">
+        <LensIcon class="mx-auto" />
+      </button>
     </div>
   </form>
 </template>
