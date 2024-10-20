@@ -28,9 +28,9 @@ const propertyImage = computed<string>(() => {
         <p class="font-light text-sm text-white">
           {{
             $t('properties.cardFooter', {
-              bedroom: property.bedroom,
-              rooms: property.rooms,
-              mq: property.mq,
+              bathrooms: property.n_bathrooms,
+              rooms: property.n_rooms,
+              mq: property.area,
             })
           }}
         </p>

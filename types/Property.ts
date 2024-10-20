@@ -3,19 +3,16 @@ export type Property = {
   address: string;
   title: string;
   slug: string;
+  id: number;
+  id_agency: number;
   image: string;
   image_2: string;
   image_3: string;
   image_4: string;
-  price: number;
-  bedroom: number;
-  rooms: number;
-  mq: number;
-  id: number;
-  id_agency: number;
   id_location: number;
   id_district: number;
   type: number;
+  price: number;
   condominium_fees: number;
   n_rooms: number;
   n_bathrooms: number;
@@ -36,5 +33,5 @@ export type Property = {
   furnished: number;
   kitchen: number;
   washlet: number;
-  active: 1
+  active: number;
 }
