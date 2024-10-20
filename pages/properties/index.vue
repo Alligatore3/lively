@@ -20,9 +20,15 @@ const properties = [
 
 const gridLayout = ref<'grid' | 'list'>('grid');
 
-const gridClasses = computed(() =>
-  gridLayout.value === 'grid' ? 'grid grid-rows-3 grid-flow-col gap-3' : 'flex gap-4 flex-col w-full'
-);
+const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
+
+const gridClasses = computed<string[]>(() => {
+  const deafultClasses = ['my-4 transition-all duration-300 ease-in-out'];
+
+  return gridLayout.value === 'grid'
+    ? [...deafultClasses, 'grid grid-rows-3 grid-flow-col gap-3']
+    : [...deafultClasses, 'flex gap-4 flex-col w-full'];
+});
 
 function toggleLayout() {
   gridLayout.value = gridLayout.value === 'grid' ? 'list' : 'grid';
@@ -33,13 +39,13 @@ function toggleLayout() {
   <ContentWithFilters>
     <div>
       <ul class="flex flex-column gap-4">
-        <li>
+        <li :class="isGridLayout ? 'text-black' : 'text-gray'">
           <button @click="toggleLayout">
             <GridIcon />
           </button>
           <span class="sr-only">Grid layout toggle</span>
         </li>
-        <li>
+        <li :class="!isGridLayout ? 'text-black' : 'text-gray'">
           <button @click="toggleLayout">
             <BurgerIcon />
           </button>
@@ -47,7 +53,7 @@ function toggleLayout() {
         </li>
       </ul>
     </div>
-    <div :class="['my-4 transition-all duration-300 ease-in-out', gridClasses]">
+    <div :class="gridClasses">
       <NuxtLink
         :to="{ name: 'properties-id', params: { id: property.id } }"
         v-for="property in properties"
