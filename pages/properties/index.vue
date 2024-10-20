@@ -2,12 +2,18 @@
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import BurgerIcon from '@/components/icons/BurgerIcon';
 import GridIcon from '@/components/icons/GridIcon';
+import type { Property } from '@/types/Property';
 
 const gridLayout = ref<'grid' | 'list'>('grid');
 
 const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 
 const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
+
+const fakeProperties = computed<Property[]>(() => {
+  const fakeValues = Array.from({ length: 8 }, () => propertyList.value[0]);
+  return [...fakeValues, ...propertyList.value];
+});
 
 const gridClasses = computed<string[]>(() => {
   const deafultClasses = ['my-4 transition-all duration-300 ease-in-out'];
@@ -50,7 +56,7 @@ onMounted(fetchPropertiesByType);
     <div :class="gridClasses">
       <NuxtLink
         :to="{ name: 'properties-id', params: { id: property.id } }"
-        v-for="property in propertyList"
+        v-for="property in fakeProperties"
         :key="property.id"
       >
         <PropertyCard :property="property" />
