@@ -7,6 +7,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   theme: {
     colors: {
+      ...colors,
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
@@ -14,7 +15,7 @@ module.exports = {
       emerald: colors.emerald,
       indigo: colors.indigo,
       yellow: colors.yellow,
-      gray: '#dedfe2',
+      gray: colors.gray,
     },
   },
 };

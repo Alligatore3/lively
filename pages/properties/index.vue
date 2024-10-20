@@ -11,6 +11,8 @@ const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
 
 const fakeProperties = computed<Property[]>(() => {
+  if (!propertyList.value.length) return [];
+
   const fakeValues = Array.from({ length: 8 }, () => propertyList.value[0]);
   return [...fakeValues, ...propertyList.value];
 });
@@ -37,30 +39,34 @@ onMounted(fetchPropertiesByType);
 
 <template>
   <ContentWithFilters>
-    <div>
-      <ul class="flex flex-column gap-4">
-        <li :class="isGridLayout ? 'text-black' : 'text-gray'">
-          <button @click="toggleLayout">
-            <GridIcon />
-          </button>
-          <span class="sr-only">Grid layout toggle</span>
-        </li>
-        <li :class="!isGridLayout ? 'text-black' : 'text-gray'">
-          <button @click="toggleLayout">
-            <BurgerIcon />
-          </button>
-          <span class="sr-only">List layout toggle</span>
-        </li>
-      </ul>
-    </div>
-    <div :class="gridClasses">
-      <NuxtLink
-        :to="{ name: 'properties-id', params: { id: property.id } }"
-        v-for="property in fakeProperties"
-        :key="property.id"
-      >
-        <PropertyCard :property="property" />
-      </NuxtLink>
+    <PropertyCardsSkeleton v-if="isLoading" />
+
+    <div v-else>
+      <div>
+        <ul class="flex flex-column gap-4">
+          <li :class="isGridLayout ? 'text-black' : 'text-gray'">
+            <button @click="toggleLayout">
+              <GridIcon />
+            </button>
+            <span class="sr-only">Grid layout toggle</span>
+          </li>
+          <li :class="!isGridLayout ? 'text-black' : 'text-gray'">
+            <button @click="toggleLayout">
+              <BurgerIcon />
+            </button>
+            <span class="sr-only">List layout toggle</span>
+          </li>
+        </ul>
+      </div>
+      <div :class="gridClasses">
+        <NuxtLink
+          v-for="property in fakeProperties"
+          :to="{ name: 'properties-id', params: { id: property.id } }"
+          :key="property.id"
+        >
+          <PropertyCard :property="property" />
+        </NuxtLink>
+      </div>
     </div>
   </ContentWithFilters>
 </template>

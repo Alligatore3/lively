@@ -80,6 +80,6 @@ const formId = 'home-search-form';
 
 <style scoped>
 .divider {
-  @apply h-[32px] w-px bg-gray;
+  @apply h-[32px] w-px bg-gray-200;
 }
 </style>
