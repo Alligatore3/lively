@@ -37,7 +37,7 @@ onMounted(initPropertiesSearch);
       <code>type: {{ type }} </code>
     </div>
 
-    <div class="flex-grow h-full">
+    <div class="w-3/4 h-full overflow-y-scroll">
       <slot />
     </div>
   </div>
