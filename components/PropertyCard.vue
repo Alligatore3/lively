@@ -6,13 +6,18 @@ type Props = {
 };
 
 const { property } = defineProps<Props>();
+
+const propertyImage = computed<string>(() => {
+  const url = property.image || property.image_2 || property.image_3 || property.image_4;
+  return `url('${url}')`;
+});
 </script>
 
 <template>
   <div
     class="rounded-2xl h-[284px] w-full bg-cover bg-no-repeat bg-center overflow-hidden"
     :style="{
-      'background-image': `url('${property.image}')`,
+      'background-image': propertyImage,
     }"
   >
     <div class="w-full h-full flex flex-col">

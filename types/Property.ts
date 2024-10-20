@@ -1,9 +1,40 @@
 export type Property = {
+  description: string;
   address: string;
+  title: string;
+  slug: string;
   image: string;
+  image_2: string;
+  image_3: string;
+  image_4: string;
   price: number;
   bedroom: number;
   rooms: number;
   mq: number;
-  id: string;
-};
+  id: number;
+  id_agency: number;
+  id_location: number;
+  id_district: number;
+  type: number;
+  condominium_fees: number;
+  n_rooms: number;
+  n_bathrooms: number;
+  n_balconies: number;
+  floor: number;
+  area: number;
+  deposit: number;
+  agency_fee: number;
+  thanks_fee: number;
+  year_build: number;
+  year_renewal: number;
+  wifi: number;
+  pet: number;
+  parking: number;
+  bike_parking: number;
+  tatami_room: number;
+  air_conditioning: number;
+  furnished: number;
+  kitchen: number;
+  washlet: number;
+  active: 1
+}

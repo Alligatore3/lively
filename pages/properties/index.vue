@@ -1,24 +1,11 @@
 <script setup lang="ts">
-import { createPropertyMock } from '@/utils/createPropertyMock';
+import { useLivelyStore } from '@/stores/useLivelyStore';
 import BurgerIcon from '@/components/icons/BurgerIcon';
 import GridIcon from '@/components/icons/GridIcon';
 
-const properties = [
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-  createPropertyMock(),
-];
-
 const gridLayout = ref<'grid' | 'list'>('grid');
+
+const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 
 const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
 
@@ -33,6 +20,13 @@ const gridClasses = computed<string[]>(() => {
 function toggleLayout() {
   gridLayout.value = isGridLayout.value ? 'list' : 'grid';
 }
+
+async function fetchPropertiesByType() {
+  if (isLoading.value) return;
+  await getPropertyList('rent');
+}
+
+onMounted(fetchPropertiesByType);
 </script>
 
 <template>
@@ -56,7 +50,7 @@ function toggleLayout() {
     <div :class="gridClasses">
       <NuxtLink
         :to="{ name: 'properties-id', params: { id: property.id } }"
-        v-for="property in properties"
+        v-for="property in propertyList"
         :key="property.id"
       >
         <PropertyCard :property="property" />

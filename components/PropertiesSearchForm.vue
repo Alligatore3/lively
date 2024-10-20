@@ -5,8 +5,8 @@ import LensIcon from '@/components/icons/LensIcon';
 
 type Props = {
   locations?: PropertyLocation[];
+  isLoading: Ref<boolean>;
   onSubmit: () => void;
-  isLoading: boolean;
 };
 
 defineProps<Props>();
@@ -27,7 +27,7 @@ const formId = 'home-search-form';
         <label for="type" class="font-semibold">
           {{ $t('home.form.type.label') }}
         </label>
-        <select v-model="propertyType" name="type" id="type" :form="formId" :disabled="isLoading">
+        <select v-model="propertyType" name="type" id="type" :form="formId" :disabled="isLoading.value">
           <option value="buy">
             {{ $t('home.form.type.values.buy') }}
           </option>
@@ -43,7 +43,7 @@ const formId = 'home-search-form';
         <label for="location" class="font-semibold">
           {{ $t('home.form.location.label') }}
         </label>
-        <select v-model="propertyLocation" name="location" id="location" :form="formId" :disabled="isLoading">
+        <select v-model="propertyLocation" name="location" id="location" :form="formId" :disabled="isLoading.value">
           <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
           <option :key="location.id" v-for="location in locations" :value="location.id">
             {{ location.name }}
@@ -59,7 +59,7 @@ const formId = 'home-search-form';
           <input
             :placeholder="$t('home.form.priceRange.placeholder')"
             v-model="propertyPriceRange"
-            :disabled="isLoading"
+            :disabled="isLoading.value"
             name="priceRange"
             id="priceRange"
             :form="formId"
@@ -68,7 +68,7 @@ const formId = 'home-search-form';
         </label>
       </div>
 
-      <div v-if="isLoading" class="rounded-full bg-black w-12 h-12">
+      <div v-if="isLoading.value" class="rounded-full bg-black w-12 h-12">
         <Spinner />
       </div>
       <button v-else type="submit" class="rounded-full bg-black w-12 h-12 text-white">

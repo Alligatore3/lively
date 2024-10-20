@@ -1,6 +1,7 @@
 import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
 import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
+import type { Property } from '@/types/Property';
 import { isString } from '@/utils/isString';
 
 const localStorageTokenKey = 'LivelyToken';
@@ -11,6 +12,8 @@ export function useLivelyStore() {
   const isLoading = useState<boolean>('isLoading', () => false);
 
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
+
+  const propertyList = useState<Property[]>('propertyList', () => []);
 
   function onResponseError({ error }: { error: string | Record<string, string> }) {
     const text = isString(error) ? error : error.message;
@@ -64,5 +67,37 @@ export function useLivelyStore() {
     isLoading.value = false;
   }
 
-  return { propertyLocationList, initHelloClient, getLocationList };
+  async function getPropertyList(type: PropertyType) {
+    if (isLoading.value) return;
+
+    isLoading.value = true;
+
+    await initHelloClient();
+
+    const token = localStorage.getItem(localStorageTokenKey);
+
+    await useFetch(generateLivelyEndpoint('property/list'), {
+      body: { token, type },
+      method: 'post',
+      onResponseError,
+      onResponse({ response }) {
+        if (response.status === 400) {
+          onResponseError({ error: response.statusText });
+        } else {
+          propertyList.value = response._data.properties;
+        }
+      },
+    });
+
+    isLoading.value = false;
+  }
+
+  return {
+    propertyLocationList,
+    propertyList,
+    isLoading,
+    initHelloClient,
+    getLocationList,
+    getPropertyList
+  };
 }

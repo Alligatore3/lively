@@ -7,9 +7,7 @@ import houseImage from '~/assets/images/house.png';
 
 const backgroundImage = `url(${houseImage})`;
 
-const { getLocationList, propertyLocationList } = useLivelyStore();
-
-const isLoading = ref<boolean>(false);
+const { getLocationList, propertyLocationList, isLoading } = useLivelyStore();
 
 const propertyType = ref<PropertyType>(DEFAULT_PROPERTY_TYPE);
 
@@ -31,9 +29,7 @@ function onSubmit() {
 async function fetchLocationsByType() {
   if (!propertyType.value) return;
 
-  isLoading.value = true;
   await getLocationList(propertyType.value);
-  isLoading.value = false;
 }
 
 watch(propertyType, fetchLocationsByType);
