@@ -61,7 +61,7 @@ onMounted(fetchPropertiesByType);
       <div :class="gridClasses">
         <NuxtLink
           v-for="property in fakeProperties"
-          :to="{ name: 'properties-id', params: { id: property.id } }"
+          :to="{ name: 'properties-slug', params: { slug: property.slug } }"
           :key="property.id"
         >
           <PropertyCard :property="property" />
