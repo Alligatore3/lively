@@ -1,28 +1,17 @@
 <script setup lang="ts">
+import type { PropertyType } from '@/types/PropertyType';
+import { isPropertyType } from '@/utils/isPropertyType';
+import { isString } from '@/utils/isString';
+
 const route = useRoute();
 
-const type = ref<'buy' | 'rent' | null>(null);
+const type = computed<PropertyType | null>(() => (isPropertyType(route.query.type) ? route.query.type : null));
 
-const location = ref<string | null>(null);
+const location = computed<string | null>(() => (isString(route.query.location) ? route.query.location : null));
 
-const priceRange = ref<number | null>(null);
-
-/**
- * @todo 'useRoute' is not updating values.
- */
-function initPropertiesSearch() {
-  const queryString = window.location.search;
-
-  const urlParams = new URLSearchParams(queryString);
-
-  priceRange.value = Number(urlParams.get('priceRange'));
-  type.value = urlParams.get('type') as 'buy' | 'rent';
-  location.value = urlParams.get('location');
-}
-
-watch(() => route.fullPath, initPropertiesSearch);
-
-onMounted(initPropertiesSearch);
+const priceRange = computed<number | null>(() =>
+  typeof route.query.priceRange === 'number' && !isNaN(route.query.priceRange) ? route.query.priceRange : null
+);
 </script>
 
 <template>
