@@ -15,6 +15,8 @@ export function useLivelyStore() {
 
   const propertyList = useState<Property[]>('propertyList', () => []);
 
+  const propertyBySlug = useState<Property | null>('propertyBySlug', () => null);
+
   function onResponseError({ error }: { error: string | Record<string, string> }) {
     const text = isString(error) ? error : error.message;
 
@@ -92,10 +94,39 @@ export function useLivelyStore() {
     isLoading.value = false;
   }
 
+  async function getPropertyBySlug(slug: Property['slug'] | null) {
+    if (!slug) return;
+
+    if (isLoading.value) return;
+
+    isLoading.value = true;
+
+    await initHelloClient();
+
+    const token = localStorage.getItem(localStorageTokenKey);
+
+    await useFetch(generateLivelyEndpoint('property'), {
+      body: { token, slug },
+      method: 'post',
+      onResponseError,
+      onResponse({ response }) {
+        if (response.status === 400) {
+          onResponseError({ error: response.statusText });
+        } else {
+          propertyBySlug.value = response._data.properties;
+        }
+      },
+    });
+
+    isLoading.value = false;
+  }
+
   return {
     propertyLocationList,
+    propertyBySlug,
     propertyList,
     isLoading,
+    getPropertyBySlug,
     initHelloClient,
     getLocationList,
     getPropertyList
