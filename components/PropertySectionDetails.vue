@@ -44,7 +44,7 @@ const propertyAttributeListAvailableMap = computed(() =>
           {{ isTruncated ? t('properties.readMore') : t('properties.readLess') }}
         </button>
 
-        <ul class="flex flex-row gap-5 mt-9">
+        <ul class="flex flex-row gap-5 mt-9 flex-wrap">
           <li
             class="flex flex-row items-center gap-1 font-bold"
             :key="attribute.key"
