@@ -20,12 +20,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <PropertyPageSkeleton />
-
-  <!-- <div v-if="isLoading">isLoading</div>
+  <PropertyPageSkeleton v-if="isLoading" />
   <div v-else-if="property">
     <PropertySectionImages :property="property" />
 
     <PropertySectionDetails :property="property" />
-  </div> -->
+  </div>
 </template>
