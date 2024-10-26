@@ -26,7 +26,16 @@
     }
   },
   "properties": {
+    "cardFooter": "{bathrooms} bathrooms - {rooms} rooms - {mq} Sq. ft",
+    "aboutApartment": "About apartment",
+    "readMore": "Read more",
+    "readLess": "Read less",
     "back": "Back",
-    "cardFooter": "{bathrooms} bathrooms - {rooms} rooms - {mq} Sq. ft"
+    "attributes": {
+      "airConditioning": "Air conditioning",
+      "kitchen": "Kitchen",
+      "parking": "Parking",
+      "wifi": "Wi-Fi"
+    }
   }
 }
