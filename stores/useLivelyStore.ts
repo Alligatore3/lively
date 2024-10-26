@@ -105,7 +105,7 @@ export function useLivelyStore() {
 
     const token = localStorage.getItem(localStorageTokenKey);
 
-    await useFetch(generateLivelyEndpoint('property'), {
+    await useFetch(generateLivelyEndpoint('property/'), {
       body: { token, slug },
       method: 'post',
       onResponseError,

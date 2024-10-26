@@ -44,14 +44,14 @@ onMounted(fetchPropertiesByType);
     <div v-else>
       <div>
         <ul class="flex flex-column gap-4">
-          <li :class="isGridLayout ? 'text-black' : 'text-gray'">
-            <button @click="toggleLayout">
+          <li class="leading-[0]" :class="isGridLayout ? 'text-black' : 'text-gray'">
+            <button class="leading-[0]" @click="toggleLayout">
               <GridIcon />
             </button>
             <span class="sr-only">Grid layout toggle</span>
           </li>
-          <li :class="!isGridLayout ? 'text-black' : 'text-gray'">
-            <button @click="toggleLayout">
+          <li class="leading-[0]" :class="!isGridLayout ? 'text-black' : 'text-gray'">
+            <button class="leading-[0]" @click="toggleLayout">
               <BurgerIcon />
             </button>
             <span class="sr-only">List layout toggle</span>
