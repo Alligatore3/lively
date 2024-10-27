@@ -21,7 +21,7 @@ const gridClasses = computed<string[]>(() => {
   const deafultClasses = ['my-4 transition-all duration-300 ease-in-out'];
 
   return isGridLayout.value
-    ? [...deafultClasses, 'grid grid-rows-3 grid-flow-col gap-3']
+    ? [...deafultClasses, 'grid grid-flow-col grid-rows-12 md:grid-rows-6 xl:grid-rows-3 gap-4']
     : [...deafultClasses, 'flex gap-4 flex-col w-full'];
 });
 
@@ -58,15 +58,13 @@ onMounted(fetchPropertiesByType);
           </li>
         </ul>
       </div>
-      <div :class="gridClasses">
-        <NuxtLink
-          v-for="property in fakeProperties"
-          :to="{ name: 'properties-slug', params: { slug: property.slug } }"
-          :key="property.id"
-        >
-          <PropertyCard :property="property" />
-        </NuxtLink>
-      </div>
+      <ul :class="gridClasses">
+        <li v-for="property in fakeProperties" :key="property.id">
+          <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
+            <PropertyCard :property="property" />
+          </NuxtLink>
+        </li>
+      </ul>
     </div>
   </ContentWithFilters>
 </template>
