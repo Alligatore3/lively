@@ -32,9 +32,13 @@ onMounted(fetchAgencyPropertyListBySlug);
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />
 
-      <ContentGridListSwitcher v-else>
+      <ContentGridListSwitcher v-else-if="agencyBySlug">
         <template #loop-list>
-          {{ agencyBySlug }}
+          <li v-for="property in agencyBySlug.properties" :key="property.id">
+            <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
+              <PropertyCard :property="property" />
+            </NuxtLink>
+          </li>
         </template>
       </ContentGridListSwitcher>
     </template>
