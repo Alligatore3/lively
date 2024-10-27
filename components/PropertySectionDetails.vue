@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useShare } from '@vueuse/core';
 import type { Property } from '@/types/Property';
 import CheckIcon from '@/components/icons/CheckIcon';
+import LocationIcon from '@/components/icons/LocationIcon';
+import DownloadIcon from '@/components/icons/DownloadIcon';
 
 type Props = {
   property: Property;
@@ -10,9 +13,24 @@ type PropertyAttributeKey = 'air_conditioning' | 'kitchen' | 'parking' | 'wifi';
 
 const { t } = useI18n();
 
+const { share, isSupported } = useShare();
+
+function shareProperty() {
+  share({
+    title: 'Hello',
+    text: 'Hello my friend!',
+    url: location.href,
+  });
+}
+
 const { property } = defineProps<Props>();
 
 const isTruncated = ref(true);
+
+const propertyAddressLink = computed<Property['address'] | null>(() => {
+  const prefix = 'https://www.google.com/maps/search/?api=1&query=';
+  return property.address ? `${prefix}${property.address}` : null;
+});
 
 const propertyAttibuteList: Array<{
   key: PropertyAttributeKey;
@@ -30,7 +48,30 @@ const propertyAttributeListAvailableMap = computed(() =>
 </script>
 
 <template>
-  <section id="property-data" class="px-4 pt-6">
+  <section id="property-data" class="px-4">
+    <div class="flex mb-9 items-center">
+      <div class="flex gap-2">
+        <LocationIcon class="text-black" />
+
+        <NuxtLink
+          v-if="propertyAddressLink"
+          :to="propertyAddressLink"
+          class="font-semibold underline"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ property.address }}
+        </NuxtLink>
+      </div>
+
+      <div class="flex-grow" />
+
+      <button @click="shareProperty" class="flex flex-row gap-2 border rounded-md px-5 py-3 font-semibold">
+        <DownloadIcon class="text-black" />
+        {{ $t('properties.share') }}
+      </button>
+    </div>
+
     <div class="flex gap-2">
       <div class="flex w-1/2 flex-col gap-3">
         <h3 class="text-4xl">¥{{ property.price }}</h3>
