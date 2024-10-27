@@ -1,4 +1,8 @@
 {
+  "shared": {
+    "readMore": "Read more",
+    "readLess": "Read less"
+  },
   "logo": "Lively",
   "navigation": {
     "properties": "Properties",
@@ -28,8 +32,6 @@
   "properties": {
     "cardFooter": "{bathrooms} bathrooms - {rooms} rooms - {mq} Sq. ft",
     "aboutApartment": "About apartment",
-    "readMore": "Read more",
-    "readLess": "Read less",
     "back": "Back",
     "share": "Share",
     "pricingDetailsTerms": "Pricing details and terms",

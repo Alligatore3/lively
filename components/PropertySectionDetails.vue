@@ -5,6 +5,7 @@ import type { Property } from '@/types/Property';
 import CheckIcon from '@/components/icons/CheckIcon';
 import LocationIcon from '@/components/icons/LocationIcon';
 import DownloadIcon from '@/components/icons/DownloadIcon';
+import ReadMoreWrapper from '@/components/ReadMoreWrapper';
 
 type Props = {
   property: Property;
@@ -17,8 +18,6 @@ const { t } = useI18n();
 const { property } = defineProps<Props>();
 
 const { share, isSupported } = useShare();
-
-const isTruncated = ref(true);
 
 const sharePropertyAttributes = computed(() => ({
   title: `Lively - ${property.title}`,
@@ -114,13 +113,12 @@ const propertyAttributeListAvailableMap = computed(() =>
           </button>
         </div>
       </div>
-      <div class="flex md:w-1/2 flex-col gap-3 items-start">
-        <p class="font-bold text-xl">{{ t('properties.aboutApartment') }}</p>
-        <p v-html="property.description" :class="isTruncated ? 'line-clamp-2' : undefined" />
-
-        <button class="underline font-semibold" @click="isTruncated = !isTruncated">
-          {{ isTruncated ? t('properties.readMore') : t('properties.readLess') }}
-        </button>
+      <div class="flex md:w-1/2 flex-col gap-3">
+        <ReadMoreWrapper :description="property.description">
+          <template #label>
+            <p class="font-bold text-xl">{{ t('properties.aboutApartment') }}</p>
+          </template>
+        </ReadMoreWrapper>
 
         <ul class="flex flex-row gap-5 mt-9 flex-wrap">
           <li
