@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const livelyTitle = 'Lively - Real Estate Platform';
-const livelyDescription =
-  'Lively can help you rent, sell, or buy accomodation, take a mortage, invest in real estate, and a lot more';
+import { livelyTitle, livelyDescription } from '@/utils/generateSocialMetaAttributes';
 
 useHead({
   link: [{ href: 'favicon.png', type: 'image/png', rel: 'icon' }],

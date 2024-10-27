@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useShare } from '@vueuse/core';
+import { generateSocialMetaAttributes } from '@/utils/generateSocialMetaAttributes';
 import type { Property } from '@/types/Property';
 import CheckIcon from '@/components/icons/CheckIcon';
 import LocationIcon from '@/components/icons/LocationIcon';
@@ -13,19 +14,27 @@ type PropertyAttributeKey = 'air_conditioning' | 'kitchen' | 'parking' | 'wifi';
 
 const { t } = useI18n();
 
-const { share, isSupported } = useShare();
-
-function shareProperty() {
-  share({
-    title: 'Hello',
-    text: 'Hello my friend!',
-    url: location.href,
-  });
-}
-
 const { property } = defineProps<Props>();
 
+const { share, isSupported } = useShare();
+
 const isTruncated = ref(true);
+
+const sharePropertyAttributes = computed(() => ({
+  title: `Lively - ${property.title}`,
+  url: location.href,
+}));
+
+useHead({
+  meta: generateSocialMetaAttributes({
+    title: `Lively - ${property.title}`,
+    description: property.description,
+    src: property.image,
+    url: location.href,
+    width: 180,
+    height: 110,
+  }),
+});
 
 const propertyAddressLink = computed<Property['address'] | null>(() => {
   const prefix = 'https://www.google.com/maps/search/?api=1&query=';
@@ -66,7 +75,11 @@ const propertyAttributeListAvailableMap = computed(() =>
 
       <div class="flex-grow" />
 
-      <button @click="shareProperty" class="flex flex-row gap-2 border rounded-md px-5 py-3 font-semibold">
+      <button
+        v-if="isSupported"
+        @click="share(sharePropertyAttributes)"
+        class="flex flex-row gap-2 border rounded-md px-5 py-3 font-semibold"
+      >
         <DownloadIcon class="text-black" />
         {{ $t('properties.share') }}
       </button>
