@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="navigation flex items-center gap-32 text-white p-4">
+    <div class="navigation flex items-center justify-between text-white p-4">
       <h1 class="text-2xl font-extrabold">
         <NuxtLink to="/">{{ $t('logo') }}</NuxtLink>
       </h1>
