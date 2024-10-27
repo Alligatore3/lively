@@ -1,16 +1,14 @@
 <template>
   <div class="container mx-auto">
-    <div class="navigation flex items-center justify-between text-white p-4">
+    <div class="navigation flex items-center gap-0 md:gap-24 justify-between md:justify-start text-white p-4">
       <h1 class="text-2xl font-extrabold">
         <NuxtLink to="/">{{ $t('logo') }}</NuxtLink>
       </h1>
       <nav class="flex items-center gap-8">
-        <NuxtLink active-class="is-active" class="relative pb-1" to="/properties">{{
+        <NuxtLink active-class="is-active" class="relative" to="/properties">{{
           $t('navigation.properties')
         }}</NuxtLink>
-        <NuxtLink active-class="is-active" class="relative pb-1" to="/agencies">{{
-          $t('navigation.agencies')
-        }}</NuxtLink>
+        <NuxtLink active-class="is-active" class="relative" to="/agencies">{{ $t('navigation.agencies') }}</NuxtLink>
       </nav>
     </div>
   </div>
@@ -18,7 +16,7 @@
 
 <style lang="css" scoped>
 nav a.is-active::after {
-  @apply absolute inset-x-0 bg-white rounded-lg bottom-0 mx-auto;
+  @apply absolute inset-x-0 bg-white rounded-lg -bottom-1 mx-auto;
   content: '';
   height: 3px;
   width: 15px;
