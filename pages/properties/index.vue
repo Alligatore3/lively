@@ -27,7 +27,7 @@ onMounted(fetchPropertiesByType);
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />
 
-      <ContentGridListSwitcher v-else>
+      <ContentGridListSwitcher v-else :listLenght="fakeProperties.length">
         <template #loop-list>
           <li v-for="property in fakeProperties" :key="property.id">
             <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">

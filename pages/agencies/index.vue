@@ -1,10 +1,12 @@
 <template>
-  <div>Lively - Agencies</div>
+  <div>
+    <div>Lively - Agencies</div>
 
-  We have these agencies:
-  <ul>
-    <li>
-      <NuxtLink to="/agencies/real-estate-agency">Agency Test 3</NuxtLink>
-    </li>
-  </ul>
+    We have these agencies:
+    <ul>
+      <li>
+        <NuxtLink to="/agencies/real-estate-agency">Agency Test 3</NuxtLink>
+      </li>
+    </ul>
+  </div>
 </template>

@@ -1,16 +1,12 @@
 <template>
-  <div class="container mx-auto">
-    <div class="navigation flex items-center gap-0 md:gap-24 justify-between md:justify-start text-white p-4">
-      <h1 class="text-2xl font-extrabold">
-        <NuxtLink to="/">{{ $t('logo') }}</NuxtLink>
-      </h1>
-      <nav class="flex items-center gap-8">
-        <NuxtLink active-class="is-active" class="relative" to="/properties">{{
-          $t('navigation.properties')
-        }}</NuxtLink>
-        <NuxtLink active-class="is-active" class="relative" to="/agencies">{{ $t('navigation.agencies') }}</NuxtLink>
-      </nav>
-    </div>
+  <div class="navigation flex items-center gap-0 md:gap-24 justify-between md:justify-start text-white py-4">
+    <h1 class="text-2xl font-extrabold">
+      <NuxtLink to="/">{{ $t('logo') }}</NuxtLink>
+    </h1>
+    <nav class="flex items-center gap-8">
+      <NuxtLink active-class="is-active" class="relative" to="/properties">{{ $t('navigation.properties') }}</NuxtLink>
+      <NuxtLink active-class="is-active" class="relative" to="/agencies">{{ $t('navigation.agencies') }}</NuxtLink>
+    </nav>
   </div>
 </template>
 

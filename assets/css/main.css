@@ -3,5 +3,13 @@ body, html {
   font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;
+
+  height: 100%;
+  width: 100%;
+}
+
+#lively {
+  height: 100%;
+  width: 100%;
 }
   

@@ -11,7 +11,7 @@ const { agency } = defineProps<Props>();
 
 <template>
   <div>
-    <div class="my-10">
+    <div class="md:my-10">
       <NuxtImg :src="agency.image" :alt="agency.name" class="w-16 h-16 rounded-full border" />
 
       <h2 class="font-semibold mt-4 mb-1">{{ agency.name }}</h2>
