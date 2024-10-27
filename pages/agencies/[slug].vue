@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import type { Agency } from '@/types/Agency';
 
-const { getPropertyList, propertyList, isLoading } = useLivelyStore();
+const route = useRoute();
 
-async function fetchPropertiesByType() {
+const { getAgencyBySlug, agencyBySlug, isLoading } = useLivelyStore();
+
+const agencySlug = computed<Agency['slug'] | null>(() => (isString(route.params.slug) ? route.params.slug : null));
+
+async function fetchAgencyPropertyListBySlug() {
   if (isLoading.value) return;
-  await getPropertyList('rent');
+  await getAgencyBySlug(agencySlug.value);
 }
 
-onMounted(fetchPropertiesByType);
+onMounted(fetchAgencyPropertyListBySlug);
 </script>
 
 <template>
   <ContentWithFilters>
-    <PropertyCardsSkeleton v-if="isLoading" />
+    <GridCardsSkeleton v-if="isLoading" />
 
     <ContentGridListSwitcher v-else>
-      <template #loop-list> HEY </template>
+      <template #loop-list>
+        {{ agencyBySlug }}
+      </template>
     </ContentGridListSwitcher>
   </ContentWithFilters>
 </template>

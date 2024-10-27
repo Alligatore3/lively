@@ -2,6 +2,7 @@ import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
 import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
 import type { Property } from '@/types/Property';
+import type { Agency } from '@/types/Agency';
 import { isString } from '@/utils/isString';
 
 const localStorageTokenKey = 'LivelyToken';
@@ -14,6 +15,8 @@ export function useLivelyStore() {
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
 
   const propertyList = useState<Property[]>('propertyList', () => []);
+
+  const agencyBySlug = useState<Agency | null>('agencyBySlug', () => null);
 
   const propertyBySlug = useState<Property | null>('propertyBySlug', () => null);
 
@@ -121,12 +124,41 @@ export function useLivelyStore() {
     isLoading.value = false;
   }
 
+  async function getAgencyBySlug(slug: Agency['slug'] | null) {
+    if (!slug) return;
+
+    if (isLoading.value) return;
+
+    isLoading.value = true;
+
+    await initHelloClient();
+
+    const token = localStorage.getItem(localStorageTokenKey);
+
+    await useFetch(generateLivelyEndpoint('agency/'), {
+      body: { token, slug },
+      method: 'post',
+      onResponseError,
+      onResponse({ response }) {
+        if (response.status === 400) {
+          onResponseError({ error: response.statusText });
+        } else {
+          agencyBySlug.value = response._data.agency;
+        }
+      },
+    });
+
+    isLoading.value = false;
+  }
+
   return {
     propertyLocationList,
     propertyBySlug,
+    agencyBySlug,
     propertyList,
     isLoading,
     getPropertyBySlug,
+    getAgencyBySlug,
     initHelloClient,
     getLocationList,
     getPropertyList

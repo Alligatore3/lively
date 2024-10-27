@@ -22,7 +22,7 @@ onMounted(fetchPropertiesByType);
 
 <template>
   <ContentWithFilters>
-    <PropertyCardsSkeleton v-if="isLoading" />
+    <GridCardsSkeleton v-if="isLoading" />
 
     <ContentGridListSwitcher v-else>
       <template #loop-list>
