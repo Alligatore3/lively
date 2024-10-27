@@ -21,17 +21,21 @@ onMounted(fetchPropertiesByType);
 </script>
 
 <template>
-  <ContentWithFilters>
-    <GridCardsSkeleton v-if="isLoading" />
+  <ContentWithSidebar>
+    <template #sidebar> FILTER </template>
 
-    <ContentGridListSwitcher v-else>
-      <template #loop-list>
-        <li v-for="property in fakeProperties" :key="property.id">
-          <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
-            <PropertyCard :property="property" />
-          </NuxtLink>
-        </li>
-      </template>
-    </ContentGridListSwitcher>
-  </ContentWithFilters>
+    <template #content>
+      <GridCardsSkeleton v-if="isLoading" />
+
+      <ContentGridListSwitcher v-else>
+        <template #loop-list>
+          <li v-for="property in fakeProperties" :key="property.id">
+            <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
+              <PropertyCard :property="property" />
+            </NuxtLink>
+          </li>
+        </template>
+      </ContentGridListSwitcher>
+    </template>
+  </ContentWithSidebar>
 </template>

@@ -18,13 +18,17 @@ onMounted(fetchAgencyPropertyListBySlug);
 </script>
 
 <template>
-  <ContentWithFilters>
-    <GridCardsSkeleton v-if="isLoading" />
+  <ContentWithSidebar>
+    <template #sidebar> FILTER </template>
 
-    <ContentGridListSwitcher v-else>
-      <template #loop-list>
-        {{ agencyBySlug }}
-      </template>
-    </ContentGridListSwitcher>
-  </ContentWithFilters>
+    <template #content>
+      <GridCardsSkeleton v-if="isLoading" />
+
+      <ContentGridListSwitcher v-else>
+        <template #loop-list>
+          {{ agencyBySlug }}
+        </template>
+      </ContentGridListSwitcher>
+    </template>
+  </ContentWithSidebar>
 </template>
