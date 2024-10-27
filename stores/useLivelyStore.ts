@@ -113,7 +113,7 @@ export function useLivelyStore() {
         if (response.status === 400) {
           onResponseError({ error: response.statusText });
         } else {
-          propertyBySlug.value = response._data.properties;
+          propertyBySlug.value = response._data.property;
         }
       },
     });

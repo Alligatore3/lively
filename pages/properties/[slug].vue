@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { useLivelyStore } from '@/stores/useLivelyStore';
-import type { Property } from '@/types/Property';
 
 const route = useRoute();
 
-const { getPropertyList, propertyList, getPropertyBySlug, propertyBySlug, isLoading } = useLivelyStore();
+const { getPropertyBySlug, propertyBySlug, isLoading } = useLivelyStore();
 
 const properyURLSlug = computed<string | null>(() => {
   const slug = route.params.slug;
   return isString(slug) ? slug : null;
 });
 
-const property = computed<Property | null>(() => propertyList.value?.[0] || null); // to be removed
-
 onMounted(async () => {
   await getPropertyBySlug(properyURLSlug.value);
-  await getPropertyList('rent'); // to be removed
 });
 </script>
 
 <template>
   <PropertyPageSkeleton v-if="isLoading" />
-  <div v-else-if="property">
-    <PropertySectionImages :property="property" />
+  <div v-else-if="propertyBySlug">
+    <PropertySectionImages :property="propertyBySlug" />
 
-    <PropertySectionDetails :property="property" />
+    <PropertySectionDetails :property="propertyBySlug" />
   </div>
 </template>
