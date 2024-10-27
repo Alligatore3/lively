@@ -22,7 +22,7 @@ onMounted(fetchPropertiesByType);
 
 <template>
   <ContentWithSidebar>
-    <template #sidebar> FILTER </template>
+    <template #sidebar> </template>
 
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />

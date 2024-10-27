@@ -19,7 +19,15 @@ onMounted(fetchAgencyPropertyListBySlug);
 
 <template>
   <ContentWithSidebar>
-    <template #sidebar> FILTER </template>
+    <template #sidebar>
+      <div v-if="isLoading" role="status" class="flex gap-6 flex-col animate-pulse md:px-6 dark:border-gray-400">
+        <div class="h-16 w-16 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+        <div class="h-2 w-2/3 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+        <div class="h-2 w-1/2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+      </div>
+
+      <AgencyInfo v-else-if="agencyBySlug" :agency="agencyBySlug" />
+    </template>
 
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />

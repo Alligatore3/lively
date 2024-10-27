@@ -29,6 +29,10 @@
       }
     }
   },
+  "agencies": {
+    "about": "About",
+    "propertiesCount": "{count} properties"
+  },
   "properties": {
     "cardFooter": "{bathrooms} bathrooms - {rooms} rooms - {mq} Sq. ft",
     "aboutApartment": "About apartment",
