@@ -15,11 +15,12 @@ const propertyImage = computed<string>(() => {
 
 <template>
   <div
-    class="rounded-2xl h-[284px] w-full bg-cover bg-no-repeat bg-center overflow-hidden"
+    class="relative rounded-2xl h-[284px] w-full bg-cover bg-no-repeat bg-center overflow-hidden"
     :style="{
       'background-image': propertyImage,
     }"
   >
+    <slot name="avatar" />
     <div class="w-full h-full flex flex-col">
       <div class="flex-grow"></div>
       <div class="flex-grow flex flex-col justify-end p-4 bg-gradient-to-t from-black">

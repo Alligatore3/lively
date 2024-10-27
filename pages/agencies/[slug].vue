@@ -36,7 +36,15 @@ onMounted(fetchAgencyPropertyListBySlug);
         <template #loop-list>
           <li v-for="property in agencyBySlug.properties" :key="property.id">
             <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
-              <PropertyCard :property="property" />
+              <PropertyCard :property="property">
+                <template #avatar>
+                  <NuxtImg
+                    class="w-9 h-9 rounded-full border absolute right-3 top-3"
+                    :src="agencyBySlug.image"
+                    :alt="agencyBySlug.name"
+                  />
+                </template>
+              </PropertyCard>
             </NuxtLink>
           </li>
         </template>
