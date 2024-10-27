@@ -58,9 +58,9 @@ const propertyAttributeListAvailableMap = computed(() =>
 
 <template>
   <section id="property-data" class="px-8">
-    <div class="flex mb-12 items-center">
+    <div class="flex flex-col md:flex-row mb-6 md:mb-12 items-center gap-2">
       <div class="flex gap-2">
-        <LocationIcon class="text-black" />
+        <LocationIcon class="text-black shrink-0" />
 
         <NuxtLink
           v-if="propertyAddressLink"
@@ -78,15 +78,15 @@ const propertyAttributeListAvailableMap = computed(() =>
       <button
         v-if="isSupported"
         @click="share(sharePropertyAttributes)"
-        class="flex flex-row gap-2 border rounded-md px-5 py-3 font-semibold"
+        class="flex w-full md:w-auto flex-row gap-2 border rounded-md px-5 py-3 font-semibold justify-center"
       >
         <DownloadIcon class="text-black" />
         {{ $t('properties.share') }}
       </button>
     </div>
 
-    <div class="flex gap-2">
-      <div class="flex w-1/2 flex-col gap-3">
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex md:w-1/2 flex-col gap-3">
         <h3 class="text-7xl">¥{{ property.price }}</h3>
 
         <h1 class="text-2xl my-2">{{ property.title }}</h1>
@@ -107,14 +107,14 @@ const propertyAttributeListAvailableMap = computed(() =>
           </li>
         </ul>
 
-        <div class="flex gap-2 mt-24">
-          <div class="w-1/2"></div>
-          <button class="w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
+        <div class="flex flex-col md:flex-row gap-2 my-12 md:my-24">
+          <div class="w-full md:w-1/2"></div>
+          <button class="w-full md:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
             {{ t('properties.sendRequest') }}
           </button>
         </div>
       </div>
-      <div class="flex w-1/2 flex-col gap-3 items-start">
+      <div class="flex md:w-1/2 flex-col gap-3 items-start">
         <p class="font-bold text-xl">{{ t('properties.aboutApartment') }}</p>
         <p v-html="property.description" :class="isTruncated ? 'line-clamp-2' : undefined" />
 
