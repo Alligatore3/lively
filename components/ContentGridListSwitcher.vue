@@ -13,12 +13,12 @@ const gridLayout = ref<'grid' | 'list'>('grid');
 const isGridLayout = computed<boolean>(() => gridLayout.value === 'grid');
 
 const gridClasses = computed<string[]>(() => {
-  const deafultClasses = ['my-4 transition-all duration-300 ease-in-out'];
-  const rowClasses = listLenght > 2 ? ['grid-rows-12 md:grid-rows-6 xl:grid-rows-3'] : [];
+  const deafultClasses = 'my-4 transition-all duration-300 ease-in-out';
+  const colClasses = listLenght >= 3 ? 'md:grid-cols-2 xl:grid-cols-3' : listLenght === 2 ? 'md:grid-cols-2' : '';
 
   return isGridLayout.value
-    ? [...deafultClasses, ...rowClasses, 'grid grid-flow-col gap-4']
-    : [...deafultClasses, 'flex gap-4 flex-col w-full'];
+    ? [deafultClasses, colClasses, 'grid gap-4']
+    : [deafultClasses, 'flex gap-4 flex-col w-full'];
 });
 
 function toggleLayout() {
