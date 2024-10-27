@@ -57,8 +57,8 @@ const propertyAttributeListAvailableMap = computed(() =>
 </script>
 
 <template>
-  <section id="property-data" class="px-4">
-    <div class="flex mb-9 items-center">
+  <section id="property-data" class="px-8">
+    <div class="flex mb-12 items-center">
       <div class="flex gap-2">
         <LocationIcon class="text-black" />
 
@@ -87,8 +87,32 @@ const propertyAttributeListAvailableMap = computed(() =>
 
     <div class="flex gap-2">
       <div class="flex w-1/2 flex-col gap-3">
-        <h3 class="text-4xl">¥{{ property.price }}</h3>
-        <h1 class="text-2xl">{{ property.title }}</h1>
+        <h3 class="text-7xl">¥{{ property.price }}</h3>
+
+        <h1 class="text-2xl my-2">{{ property.title }}</h1>
+
+        <NuxtLink class="underline font-bold">
+          {{ t('properties.pricingDetailsTerms') }}
+        </NuxtLink>
+
+        <ul class="mt-12 flex font-bold gap-12 items-center">
+          <li>
+            {{ $t('properties.mqCounter', { counter: property.area }) }}
+          </li>
+          <li>
+            {{ $t('properties.roomCounter', { counter: property.n_rooms }) }}
+          </li>
+          <li>
+            {{ $t('properties.bathCounter', { counter: property.n_bathrooms }) }}
+          </li>
+        </ul>
+
+        <div class="flex gap-2 mt-24">
+          <div class="w-1/2"></div>
+          <button class="w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
+            {{ t('properties.sendRequest') }}
+          </button>
+        </div>
       </div>
       <div class="flex w-1/2 flex-col gap-3 items-start">
         <p class="font-bold text-xl">{{ t('properties.aboutApartment') }}</p>

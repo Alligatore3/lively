@@ -32,6 +32,12 @@
     "readLess": "Read less",
     "back": "Back",
     "share": "Share",
+    "pricingDetailsTerms": "Pricing details and terms",
+    "mqCounter": "{counter} m2",
+    "roomCounter": "{counter} rooms",
+    "bathCounter": "{counter} baths",
+    "sendRequest": "Send request",
+    "agent": "Agent: {agent}",
     "attributes": {
       "airConditioning": "Air conditioning",
       "kitchen": "Kitchen",
