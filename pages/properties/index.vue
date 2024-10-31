@@ -1,20 +1,39 @@
 <script setup lang="ts">
+import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import PropertyTypeToggle from '@/components/PropertyTypeToggle';
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
+import { generatePropertyQueryType } from '@/utils/generatePropertyQueryType';
+
+const route = useRoute();
 
 const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 
-async function fetchPropertiesByType() {
+const fetchPropertyListByType = async (type: PropertyType) => {
+  await navigateTo({
+    path: '/properties',
+    query: { type },
+  });
+
   if (isLoading.value) return;
-  await getPropertyList('rent');
+  getPropertyList(type);
+};
+
+function onPropertyTypeToggleChange(type: PropertyType) {
+  fetchPropertyListByType(type);
 }
 
-onMounted(fetchPropertiesByType);
+onMounted(() => {
+  const type = generatePropertyQueryType(route);
+  fetchPropertyListByType(type);
+});
 </script>
 
 <template>
   <ContentWithSidebar>
-    <template #sidebar> </template>
+    <template #sidebar>
+      <PropertyTypeToggle :onPropertyTypeToggleChange="onPropertyTypeToggleChange" />
+    </template>
 
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />

@@ -5,13 +5,13 @@ const route = useRoute();
 
 const { getPropertyBySlug, propertyBySlug, isLoading } = useLivelyStore();
 
-const properyURLSlug = computed<string | null>(() => {
+const propertyURLSlug = computed<string | null>(() => {
   const slug = route.params.slug;
   return isString(slug) ? slug : null;
 });
 
 onMounted(async () => {
-  await getPropertyBySlug(properyURLSlug.value);
+  await getPropertyBySlug(propertyURLSlug.value);
 });
 </script>
 

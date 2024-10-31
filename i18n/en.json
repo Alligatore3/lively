@@ -34,6 +34,10 @@
     "propertiesCount": "{count} properties"
   },
   "properties": {
+    "aside": {
+      "buy": "Buy",
+      "rent": "Rent"
+    },
     "cardFooter": "{bathrooms} bathrooms - {rooms} rooms - {mq} Sq. ft",
     "aboutApartment": "About apartment",
     "back": "Back",
