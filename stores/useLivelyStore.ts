@@ -1,4 +1,5 @@
 import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
+import type { GetPropertyListParameters } from '@/types/GetPropertyListParameters';
 import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
 import type { Property } from '@/types/Property';
@@ -74,7 +75,7 @@ export function useLivelyStore() {
     isLoading.value = false;
   }
 
-  async function getPropertyList(type: PropertyType) {
+  async function getPropertyList(queryParameters: GetPropertyListParameters) {
     if (isLoading.value) return;
 
     isLoading.value = true;
@@ -84,7 +85,7 @@ export function useLivelyStore() {
     const token = localStorage.getItem(localStorageTokenKey);
 
     await useFetch(generateLivelyEndpoint('property/list'), {
-      body: { token, type },
+      body: { token, ...queryParameters },
       method: 'post',
       onResponseError,
       onResponse({ response }) {

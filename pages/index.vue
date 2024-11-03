@@ -20,8 +20,8 @@ function onSubmit() {
   navigateTo({
     path: ROUTES.PROPERTIES,
     query: {
-      priceRange: propertyPriceRange.value,
-      location: propertyLocation.value,
+      priceRange: propertyPriceRange.value || undefined,
+      location: propertyLocation.value || undefined,
       type: propertyType.value,
     },
   });

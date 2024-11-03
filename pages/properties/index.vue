@@ -11,18 +11,16 @@ const route = useRoute();
 const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 
 const fetchPropertyListByType = async (type: PropertyType) => {
+  const query = { ...route.query, type };
+
   await navigateTo({
     path: ROUTES.PROPERTIES,
-    query: { type },
+    query,
   });
 
   if (isLoading.value) return;
-  getPropertyList(type);
+  getPropertyList(query);
 };
-
-function onPropertyTypeToggleChange(type: PropertyType) {
-  fetchPropertyListByType(type);
-}
 
 onMounted(() => {
   const type = generatePropertyQueryType(route);
@@ -33,7 +31,13 @@ onMounted(() => {
 <template>
   <ContentWithSidebar>
     <template #sidebar>
-      <PropertyTypeToggle :onPropertyTypeToggleChange="onPropertyTypeToggleChange" />
+      <PropertyTypeToggle
+        :onPropertyTypeToggleChange="
+          (type: PropertyType) => {
+            fetchPropertyListByType(type);
+          }
+        "
+      />
     </template>
 
     <template #content>
