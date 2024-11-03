@@ -1,4 +1,9 @@
+import type { Agency } from '@/types/Agency';
+
 export type Property = {
+  agency_image: Agency['image'];
+  agency_name: Agency['name'];
+  agency_slug: Agency['slug'];
   description: string;
   address: string;
   title: string;

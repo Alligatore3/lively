@@ -12,7 +12,7 @@ const { agency } = defineProps<Props>();
   <div class="relative border rounded-2xl h-[250px] w-full overflow-hidden">
     <div id="agency-avatar">
       <NuxtImg
-        class="rounded-full w-16 h-16 mx-auto my-6"
+        class="border rounded-full w-16 h-16 mx-auto my-6"
         :src="agency.image"
         :alt="agency.name"
         objectFit="cover"

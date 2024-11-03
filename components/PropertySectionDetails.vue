@@ -106,9 +106,26 @@ const propertyAttributeListAvailableMap = computed(() =>
           </li>
         </ul>
 
-        <div class="flex flex-col md:flex-row gap-2 my-12 md:my-24">
-          <div class="w-full md:w-1/2"></div>
-          <button class="w-full md:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
+        <div class="flex flex-col lg:flex-row gap-2 my-12 lg:my-24">
+          <NuxtLink
+            :to="{ name: 'agencies-slug', params: { slug: property.agency_slug } }"
+            class="w-full lg:w-1/2 border rounded-md px-5 py-3 font-semibold"
+          >
+            <div class="flex flex-row gap-4 items-center">
+              <NuxtImg
+                class="border rounded-full w-8 h-8"
+                :src="property.agency_image"
+                :alt="property.agency_name"
+                objectFit="cover"
+                layout="fill"
+              />
+              <p class="font-bold truncate">
+                {{ t('properties.agent', { agent: property.agency_name }) }}
+              </p>
+            </div>
+          </NuxtLink>
+
+          <button class="w-full lg:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
             {{ t('properties.sendRequest') }}
           </button>
         </div>
