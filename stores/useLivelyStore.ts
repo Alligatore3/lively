@@ -16,6 +16,8 @@ export function useLivelyStore() {
 
   const propertyList = useState<Property[]>('propertyList', () => []);
 
+  const agencyList = useState<Agency[]>('agencyList', () => []);
+
   const agencyBySlug = useState<Agency | null>('agencyBySlug', () => null);
 
   const propertyBySlug = useState<Property | null>('propertyBySlug', () => null);
@@ -97,6 +99,31 @@ export function useLivelyStore() {
     isLoading.value = false;
   }
 
+  async function getAgencyList(locationId?: number) {
+    if (isLoading.value) return;
+
+    isLoading.value = true;
+
+    await initHelloClient();
+
+    const token = localStorage.getItem(localStorageTokenKey);
+
+    await useFetch(generateLivelyEndpoint('agency/list'), {
+      body: { token, location: locationId },
+      method: 'post',
+      onResponseError,
+      onResponse({ response }) {
+        if (response.status === 400) {
+          onResponseError({ error: response.statusText });
+        } else {
+          agencyList.value = response._data.agencies;
+        }
+      },
+    });
+
+    isLoading.value = false;
+  }
+
   async function getPropertyBySlug(slug: Property['slug'] | null) {
     if (!slug) return;
 
@@ -156,11 +183,13 @@ export function useLivelyStore() {
     propertyBySlug,
     agencyBySlug,
     propertyList,
+    agencyList,
     isLoading,
     getPropertyBySlug,
     getAgencyBySlug,
     initHelloClient,
     getLocationList,
-    getPropertyList
+    getPropertyList,
+    getAgencyList,
   };
 }

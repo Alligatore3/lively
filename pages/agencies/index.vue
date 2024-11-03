@@ -1,12 +1,34 @@
-<template>
-  <div>
-    <div>Lively - Agencies</div>
+<script setup lang="ts">
+import type { PropertyType } from '@/types/PropertyType';
+import { useLivelyStore } from '@/stores/useLivelyStore';
+import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
 
-    We have these agencies:
-    <ul>
-      <li>
-        <NuxtLink to="/agencies/real-estate-agency">Agency Test 3</NuxtLink>
-      </li>
-    </ul>
-  </div>
+// const route = useRoute();
+
+const { getAgencyList, agencyList, isLoading } = useLivelyStore();
+
+onMounted(() => {
+  if (isLoading.value) return;
+  getAgencyList();
+});
+</script>
+
+<template>
+  <ContentWithSidebar>
+    <template #sidebar></template>
+
+    <template #content>
+      <GridCardsSkeleton v-if="isLoading" />
+
+      <ContentGridListSwitcher v-else :listLenght="agencyList.length">
+        <template #loop-list>
+          <li v-for="agency in agencyList" :key="agency.id">
+            <NuxtLink :to="{ name: 'agencies-slug', params: { slug: agency.slug } }">
+              <AgencyCard :agency="agency" />
+            </NuxtLink>
+          </li>
+        </template>
+      </ContentGridListSwitcher>
+    </template>
+  </ContentWithSidebar>
 </template>

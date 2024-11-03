@@ -31,7 +31,8 @@
   },
   "agencies": {
     "about": "About",
-    "propertiesCount": "{count} properties"
+    "propertiesCount": "{count} properties",
+    "view": "View properties"
   },
   "properties": {
     "aside": {
