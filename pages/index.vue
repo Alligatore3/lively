@@ -4,6 +4,7 @@ import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import { DEFAULT_PROPERTY_TYPE } from '@/constants';
 import houseImage from '~/assets/images/house.png';
+import { ROUTES } from '@/constants';
 
 const backgroundImage = `url(${houseImage})`;
 
@@ -17,7 +18,7 @@ const propertyPriceRange = ref<number | null>(null);
 
 function onSubmit() {
   navigateTo({
-    path: '/properties',
+    path: ROUTES.PROPERTIES,
     query: {
       priceRange: propertyPriceRange.value,
       location: propertyLocation.value,

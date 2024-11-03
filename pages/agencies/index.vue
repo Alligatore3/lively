@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
-
-// const route = useRoute();
 
 const { getAgencyList, agencyList, isLoading } = useLivelyStore();
 

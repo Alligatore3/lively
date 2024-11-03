@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import { ROUTES } from '@/constants';
 import PropertyTypeToggle from '@/components/PropertyTypeToggle';
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
 import { generatePropertyQueryType } from '@/utils/generatePropertyQueryType';
@@ -11,7 +12,7 @@ const { getPropertyList, propertyList, isLoading } = useLivelyStore();
 
 const fetchPropertyListByType = async (type: PropertyType) => {
   await navigateTo({
-    path: '/properties',
+    path: ROUTES.PROPERTIES,
     query: { type },
   });
 
