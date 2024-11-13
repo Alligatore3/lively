@@ -1,5 +1,13 @@
+<script lang="ts" setup>
+type Props = {
+  classes?: string;
+};
+
+const { classes } = defineProps<Props>();
+</script>
+
 <template>
-  <div class="spinner text-white"></div>
+  <div class="spinner text-white" :class="classes"></div>
 </template>
 
 <style lang="css" scoped>
@@ -9,16 +17,13 @@
 }
 .spinner {
   display: inline-block;
-  @apply h-[32px] w-[32px];
 }
+
 .spinner:after {
   content: ' ';
   display: block;
-  width: 32px;
-  height: 32px;
-  margin: 8px;
   border-radius: 50%;
-  border: 2px solid currentColor;
+  border-style: solid;
   border-color: currentColor transparent currentColor transparent;
   animation: spinner-animation 1.2s linear infinite;
 }

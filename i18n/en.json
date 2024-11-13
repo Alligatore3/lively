@@ -12,6 +12,7 @@
     "title": "Let's find your <br /> Dream Home!",
     "description": "We can help you rent, sell, or buy accomodation, take a mortage, invest in real estate, and a lot more",
     "form": {
+      "submit": "Search",
       "type": {
         "label": "Type",
         "values": {
