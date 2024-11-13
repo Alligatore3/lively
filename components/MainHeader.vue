@@ -19,10 +19,7 @@ import { ROUTES } from '@/constants';
 </template>
 
 <style lang="css" scoped>
-nav a.is-active::after {
-  @apply absolute inset-x-0 bg-white rounded-lg -bottom-1 mx-auto;
-  content: '';
-  height: 3px;
-  width: 15px;
+nav a.is-active {
+  @apply underline underline-offset-1;
 }
 </style>
