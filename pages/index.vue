@@ -40,17 +40,16 @@ onMounted(fetchLocationsByType);
 
 <template>
   <div class="w-full h-full">
-    <div :style="{ backgroundImage }" class="h-full bg-right-bottom bg-no-repeat">
-      <div class="flex flex-col gap-4 max-w-4xl p-16">
-        <h3 class="font-bold text-8xl" v-html="$t('home.title')" />
+    <div :style="{ backgroundImage }" class="h-full bg-right-bottom bg-no-repeat pb-[80rem] md:pb-[60rem] lg:pb-0">
+      <div class="lg:max-w-4xl p-16">
+        <h2 class="font-bold text-4xl md:text-6xl lg:text-8xl" v-html="$t('home.title')" />
 
-        <p class="my-4 text-2xl">
+        <p class="mt-4 text-base md:text-xl lg:text-2xl">
           {{ $t('home.description') }}
         </p>
 
-        <div class="flex-1"></div>
-
         <PropertiesSearchForm
+          class="mt-16"
           v-model:property-price-range="propertyPriceRange"
           v-model:property-location="propertyLocation"
           v-model:property-type="propertyType"

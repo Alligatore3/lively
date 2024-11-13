@@ -22,7 +22,7 @@ const formId = 'home-search-form';
 
 <template>
   <form :id="formId" @submit.prevent="onSubmit">
-    <div class="rounded-[30px] border border-gray w-auto md:w-[666px] bg-white py-4 md:py-1">
+    <div class="rounded-[30px] border border-gray w-auto md:w-[666px] bg-white md:px-1 py-4 md:py-1">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-2">
         <div class="flex flex-1 flex-row md:flex-col px-4 w-full justify-between">
           <label for="type" class="font-semibold">
