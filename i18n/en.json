@@ -56,5 +56,10 @@
       "parking": "Parking",
       "wifi": "Wi-Fi"
     }
+  },
+  "filters": {
+    "price": "Price",
+    "squareMeters": "Square meters",
+    "rooms": "Rooms"
   }
 }

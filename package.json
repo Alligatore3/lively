@@ -16,7 +16,8 @@
     "@vueuse/core": "^11.1.0",
     "nuxt": "^3.13.0",
     "nuxt-snackbar": "^1.1.2",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-3-slider-component": "^1.0.1"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
