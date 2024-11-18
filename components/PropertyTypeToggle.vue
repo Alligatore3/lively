@@ -2,12 +2,12 @@
 import type { PropertyType } from '@/types/PropertyType';
 
 type Props = {
-  onPropertyTypeToggleChange: (type: PropertyType) => void;
+  onToggleChange: (type: PropertyType) => void;
 };
 
 const route = useRoute();
 
-const { onPropertyTypeToggleChange } = defineProps<Props>();
+const { onToggleChange } = defineProps<Props>();
 
 const activeClasses = 'active bg-black text-white';
 
@@ -25,15 +25,15 @@ const isRentSelected = computed(() => route.query.type === 'rent');
 
     <button
       :class="isBuySelected ? activeClasses : ''"
-      @click="onPropertyTypeToggleChange('buy')"
       class="px-12 py-1 font-semibold rounded"
+      @click="onToggleChange('buy')"
     >
       {{ $t('properties.aside.buy') }}
     </button>
     <button
       :class="isRentSelected ? activeClasses : ''"
-      @click="onPropertyTypeToggleChange('rent')"
       class="px-12 py-1 font-semibold rounded"
+      @click="onToggleChange('rent')"
     >
       {{ $t('properties.aside.rent') }}
     </button>

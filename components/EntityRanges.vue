@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import VueSlider from 'vue-3-slider-component';
 import { ref } from 'vue';
+import VueSlider from 'vue-3-slider-component';
+
+type Props = {
+  onRangeChange: (values: number[]) => void;
+};
 
 const minValue = ref(0);
+
 const maxValue = ref(10);
+
+const { onRangeChange } = defineProps<Props>();
 
 const sliderValues = ref([minValue.value, maxValue.value]);
 
@@ -14,11 +21,15 @@ function onInputChange(event: Event) {
   if (name === 'minValue') {
     minValue.value = parseInt(value, 10);
     sliderValues.value = [minValue.value, maxValue.value];
+
+    onRangeChange(sliderValues.value);
   }
 
   if (name === 'maxValue') {
     maxValue.value = parseInt(value, 10);
     sliderValues.value = [minValue.value, maxValue.value];
+
+    onRangeChange(sliderValues.value);
   }
 }
 
@@ -28,6 +39,8 @@ function onSliderChange(values: number[]) {
 
   minValue.value = min;
   maxValue.value = max;
+
+  onRangeChange([min, max]);
 }
 </script>
 
@@ -58,25 +71,3 @@ function onSliderChange(values: number[]) {
     </div>
   </div>
 </template>
-
-<style lang="css">
-.vue-slider-rail {
-  @apply h-0.5;
-}
-
-.vue-slider-process {
-  @apply bg-black;
-}
-.vue-slider-dot-handle {
-  @apply bg-black relative shadow;
-}
-
-.vue-slider-dot-handle:after {
-  @apply bg-white absolute rounded-full;
-  content: '';
-  height: 50%;
-  width: 50%;
-  left: 25%;
-  top: 25%;
-}
-</style>

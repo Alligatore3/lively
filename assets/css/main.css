@@ -1,5 +1,6 @@
-body, html {
-  font-family: "Raleway", sans-serif;
+body,
+html {
+  font-family: 'Raleway', sans-serif;
   font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;
@@ -12,4 +13,24 @@ body, html {
   height: 100%;
   width: 100%;
 }
-  
+
+.vue-slider .vue-slider-rail {
+  @apply h-0.5;
+}
+
+.vue-slider-rail .vue-slider-process {
+  @apply bg-black;
+}
+
+.vue-slider-rail .vue-slider-dot-handle {
+  @apply bg-black relative shadow;
+}
+
+.vue-slider-rail .vue-slider-dot-handle:after {
+  @apply bg-white absolute rounded-full;
+  content: '';
+  height: 50%;
+  width: 50%;
+  left: 25%;
+  top: 25%;
+}
