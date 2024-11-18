@@ -35,7 +35,7 @@ function onSliderChange(values: number[]) {
   <div class="flex flex-col gap-4">
     <slot name="label" />
 
-    <VueSlider v-model="sliderValues" @change="onSliderChange" />
+    <VueSlider v-model="sliderValues" @change="onSliderChange" tooltip="none" />
 
     <div class="flex gap-2 w-full justify-center align-center">
       <input

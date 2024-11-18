@@ -1,7 +1,8 @@
 {
   "shared": {
     "readMore": "Read more",
-    "readLess": "Read less"
+    "readLess": "Read less",
+    "submit": "Submit"
   },
   "logo": "Lively",
   "navigation": {

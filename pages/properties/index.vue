@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <ContentWithSidebar>
     <template #sidebar>
-      <div class="flex flex-col gap-12">
+      <div class="flex flex-col gap-12 px-2">
         <PropertyTypeToggle
           :onPropertyTypeToggleChange="
             (type: PropertyType) => {
