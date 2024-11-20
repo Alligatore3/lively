@@ -29,8 +29,8 @@ html {
 .vue-slider-rail .vue-slider-dot-handle:after {
   @apply bg-white absolute rounded-full;
   content: '';
-  height: 50%;
-  width: 50%;
-  left: 25%;
-  top: 25%;
+  height: 40%;
+  width: 40%;
+  left: 30%;
+  top: 30%;
 }

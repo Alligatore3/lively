@@ -50,9 +50,9 @@ function onSliderChange(values: number[]) {
 
     <VueSlider v-model="sliderValues" @change="onSliderChange" tooltip="none" />
 
-    <div class="flex gap-2 w-full justify-center align-center">
+    <div class="flex gap-2 w-full align-center">
       <input
-        class="w-[100px] border rounded"
+        class="w-[50px] border rounded"
         @change="onInputChange"
         v-model="minValue"
         name="minValue"
@@ -61,7 +61,7 @@ function onSliderChange(values: number[]) {
       />
       <span> - </span>
       <input
-        class="w-[100px] border rounded"
+        class="w-[50px] border rounded"
         @change="onInputChange"
         v-model="maxValue"
         name="maxValue"
