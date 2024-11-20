@@ -185,11 +185,16 @@ onMounted(onPropertiesPageMount);
 
       <ContentGridListSwitcher v-else :listLenght="propertyList.length">
         <template #loop-list>
-          <li v-for="property in propertyList" :key="property.id">
-            <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
-              <PropertyCard :property="property" />
-            </NuxtLink>
-          </li>
+          <template v-if="propertyList.length > 0">
+            <li v-for="property in propertyList" :key="property.id">
+              <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">
+                <PropertyCard :property="property" />
+              </NuxtLink>
+            </li>
+          </template>
+          <template v-else>
+            <NoResultsItemList />
+          </template>
         </template>
       </ContentGridListSwitcher>
     </template>

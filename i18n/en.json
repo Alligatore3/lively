@@ -1,5 +1,6 @@
 {
   "shared": {
+    "noFilterResults": "No results for these filters 😔 Try to change them.",
     "readMore": "Read more",
     "readLess": "Read less",
     "submit": "Submit",

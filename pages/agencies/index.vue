@@ -18,12 +18,17 @@ onMounted(() => {
       <GridCardsSkeleton v-if="isLoading" />
 
       <ContentGridListSwitcher v-else :listLenght="agencyList.length">
-        <template #loop-list>
-          <li v-for="agency in agencyList" :key="agency.id">
-            <NuxtLink :to="{ name: 'agencies-slug', params: { slug: agency.slug } }">
-              <AgencyCard :agency="agency" />
-            </NuxtLink>
-          </li>
+        <template #loop-list v-if="agencyList.length > 0">
+          <template v-if="agencyList.length > 0">
+            <li v-for="agency in agencyList" :key="agency.id">
+              <NuxtLink :to="{ name: 'agencies-slug', params: { slug: agency.slug } }">
+                <AgencyCard :agency="agency" />
+              </NuxtLink>
+            </li>
+          </template>
+          <template v-else>
+            <NoResultsItemList />
+          </template>
         </template>
       </ContentGridListSwitcher>
     </template>
