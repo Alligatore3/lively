@@ -47,10 +47,19 @@ const onFiltersReset = async () => {
   // Remove all other filters if they exists
   router.push({ query: { type } });
 
+  propertyLocation.value = null;
+
   if (isLoading.value) return;
 
   getPropertyList({ type });
 };
+
+function onPropertyLocationChange() {
+  const location = Number(propertyLocation.value);
+  const type = queryPropertyType.value;
+
+  onFilterChange({ location, type });
+}
 
 function onPropertiesPageMount() {
   fetchPropertyListByType();
@@ -61,6 +70,8 @@ function onPropertiesPageMount() {
     getLocationList(queryPropertyType.value);
   }
 }
+
+watch(propertyLocation, onPropertyLocationChange);
 
 onMounted(onPropertiesPageMount);
 </script>
