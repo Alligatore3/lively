@@ -10,9 +10,17 @@ import { ROUTES } from '@/constants';
 
 const route = useRoute();
 
-const { getPropertyList, propertyList, isLoading } = useLivelyStore();
+const router = useRouter();
+
+const propertyLocation = ref<number | null>(null);
 
 const queryPropertyType = computed(() => generatePropertyQueryType(route));
+
+const { getPropertyList, propertyList, isLoading: isPropertyListLoading } = useLivelyStore();
+
+const { getLocationList, propertyLocationList: locations, isLoading: isLocationListLoading } = useLivelyStore();
+
+const isLoading = computed(() => isPropertyListLoading.value || isLocationListLoading.value);
 
 async function onFilterChange(params: GetPropertyListParameters) {
   const query = { ...route.query, ...params };
@@ -36,20 +44,31 @@ const onFiltersReset = async () => {
   const type = queryPropertyType.value;
   await onFilterChange({ type });
 
+  // Remove all other filters if they exists
+  router.push({ query: { type } });
+
   if (isLoading.value) return;
 
   getPropertyList({ type });
 };
 
-onMounted(() => {
+function onPropertiesPageMount() {
   fetchPropertyListByType();
-});
+
+  propertyLocation.value = Number(route.query.location) || null;
+
+  if (!locations.value.length) {
+    getLocationList(queryPropertyType.value);
+  }
+}
+
+onMounted(onPropertiesPageMount);
 </script>
 
 <template>
   <ContentWithSidebar>
     <template #sidebar>
-      <div class="flex flex-col gap-12 px-2">
+      <div class="flex flex-col gap-8 px-2">
         <PropertyTypeToggle
           :onToggleChange="
             (type: PropertyType) => {
@@ -57,6 +76,30 @@ onMounted(() => {
             }
           "
         />
+
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row justify-between align-center">
+            <h3 class="text-lg font-bold">
+              {{ $t('filters.locations') }}
+            </h3>
+
+            <CaptionText>
+              {{ $t('filters.results', { count: propertyList.length }) }}
+            </CaptionText>
+          </div>
+
+          <select
+            class="border rounded py-1 focus:outline-none"
+            v-model="propertyLocation"
+            :disabled="isLoading"
+            name="location"
+          >
+            <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
+            <option :key="location.id" v-for="location in locations" :value="location.id">
+              {{ location.name }}
+            </option>
+          </select>
+        </div>
 
         <EntityRanges
           :onRangeChange="
