@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useShare } from '@vueuse/core';
-import { generateSocialMetaAttributes } from '@/utils/generateSocialMetaAttributes';
 import type { Property } from '@/types/Property';
 import CheckIcon from '@/components/icons/CheckIcon';
 import LocationIcon from '@/components/icons/LocationIcon';
 import DownloadIcon from '@/components/icons/DownloadIcon';
 import ReadMoreWrapper from '@/components/ReadMoreWrapper';
+import PropertyRequestDialog from '@/components/PropertyRequestDialog';
+import { generateSocialMetaAttributes } from '@/utils/generateSocialMetaAttributes';
 
 type Props = {
   property: Property;
@@ -18,6 +19,8 @@ const { t } = useI18n();
 const { property } = defineProps<Props>();
 
 const { share, isSupported } = useShare();
+
+const modal = useModal();
 
 const sharePropertyAttributes = computed(() => ({
   title: `Lively - ${property.title}`,
@@ -53,6 +56,14 @@ const propertyAttibuteList: Array<{
 const propertyAttributeListAvailableMap = computed(() =>
   propertyAttibuteList.filter(({ key }) => Boolean(property[key]))
 );
+
+function openModal() {
+  /**
+   * Control programmatically
+   * @see https://ui.nuxt.com/components/modal#control-programmatically
+   */
+  modal.open(PropertyRequestDialog);
+}
 </script>
 
 <template>
@@ -125,11 +136,12 @@ const propertyAttributeListAvailableMap = computed(() =>
             </div>
           </NuxtLink>
 
-          <button class="w-full lg:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
+          <button @click="openModal" class="w-full lg:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
             {{ t('properties.sendRequest') }}
           </button>
         </div>
       </div>
+
       <div class="flex md:w-1/2 flex-col gap-3">
         <ReadMoreWrapper :description="property.description">
           <template #label>

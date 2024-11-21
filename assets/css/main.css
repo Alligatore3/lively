@@ -5,13 +5,11 @@ html {
   font-weight: normal;
   font-style: normal;
 
-  height: 100%;
-  width: 100%;
+  @apply w-full h-full text-black;
 }
 
 #lively {
-  height: 100%;
-  width: 100%;
+  @apply w-full h-full text-black;
 }
 
 .vue-slider .vue-slider-rail {

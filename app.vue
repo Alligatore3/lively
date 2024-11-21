@@ -24,5 +24,6 @@ useSeoMeta({
   <NuxtLayout name="with-header">
     <NuxtPage />
     <NuxtSnackbar />
+    <UModals />
   </NuxtLayout>
 </template>

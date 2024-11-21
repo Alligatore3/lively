@@ -1,4 +1,13 @@
 {
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address"
+  },
+  "form": {
+    "labelName": "Your name",
+    "labelEmail": "Your email",
+    "labelMessage": "Your message"
+  },
   "shared": {
     "noFilterResults": "No results for these filters 😔 Try to change them.",
     "readMore": "Read more",

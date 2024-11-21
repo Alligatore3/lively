@@ -10,14 +10,9 @@ export default defineNuxtConfig({
   ssr: false,
   css: ['~/assets/css/main.css'],
   // @see https://tailwindcss.nuxtjs.org/getting-started/installation
-  modules: ['@nuxtjs/tailwindcss', [
-    '@nuxtjs/google-fonts',
-    {
-      families: {
-        Raleway: true,
-      },
-    },
-  ], '@nuxtjs/i18n', 'nuxt-snackbar', 'nuxt-snackbar', '@nuxt/image'],
+  modules: [['@nuxtjs/google-fonts',
+    { families: { Raleway: true } },
+  ], '@nuxtjs/i18n', 'nuxt-snackbar', '@nuxt/image', '@nuxt/ui'],
   snackbar: {
     duration: 5000,
     bottom: true,
