@@ -7,9 +7,6 @@ type Props = {
 
 const { property } = defineProps<Props>();
 
-/**
- * @see https://flowbite.com/docs/components/gallery/#masonry-grid
- */
 const propertyImages = computed<string[]>(() =>
   [property.image, property.image_2, property.image_3, property.image_4].filter(isString)
 ); // to be removed
@@ -17,11 +14,11 @@ const propertyImages = computed<string[]>(() =>
 
 <template>
   <section id="property-images">
-    <div class="m-4 relative overflow-hidden rounded-lg flex flex-row gap-4">
+    <UCarousel v-slot="{ item }" :items="propertyImages" :ui="{ item: 'basis-2/6	' }" class="overflow-hidden" arrows>
       <button @click="$router.back()" class="top-4 left-4 absolute bg-white rounded-md px-5 py-3 font-semibold">
         {{ $t('properties.back') }}
       </button>
-      <div :key="index" v-for="(image, index) in propertyImages"><img :src="image" alt="" /></div>
-    </div>
+      <img :src="item" class="w-full" draggable="false" />
+    </UCarousel>
   </section>
 </template>

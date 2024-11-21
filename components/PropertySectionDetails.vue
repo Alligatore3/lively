@@ -67,7 +67,7 @@ function openModal() {
 </script>
 
 <template>
-  <section id="property-data" class="px-8">
+  <section id="property-data" class="px-8 mt-8">
     <div class="flex flex-col md:flex-row mb-6 md:mb-12 items-center gap-2">
       <div class="flex gap-2">
         <LocationIcon class="text-black shrink-0" />
