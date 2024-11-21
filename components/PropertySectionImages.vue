@@ -14,7 +14,13 @@ const propertyImages = computed<string[]>(() =>
 
 <template>
   <section id="property-images">
-    <UCarousel v-slot="{ item }" :items="propertyImages" :ui="{ item: 'basis-2/6	' }" class="overflow-hidden" arrows>
+    <UCarousel
+      class="overflow-hidden max-h-80"
+      :ui="{ item: 'basis-2/6' }"
+      :items="propertyImages"
+      v-slot="{ item }"
+      arrows
+    >
       <button @click="$router.back()" class="top-4 left-4 absolute bg-white rounded-md px-5 py-3 font-semibold">
         {{ $t('properties.back') }}
       </button>
