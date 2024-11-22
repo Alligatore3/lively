@@ -23,7 +23,7 @@ export function useLivelyStore() {
 
   const propertyBySlug = useState<Property | null>('propertyBySlug', () => null);
 
-  function onResponseError({ error }: { error: string | Record<string, string> }) {
+  function onGenericError({ error }: { error: string | Record<string, string> }) {
     const text = isString(error) ? error : error.message;
 
     snackbar.add({
@@ -39,10 +39,10 @@ export function useLivelyStore() {
 
     await useFetch(generateLivelyEndpoint('hello/client'), {
       method: 'post',
-      onResponseError,
+      onResponseError: onGenericError,
       onResponse({ response }) {
         if (response.status === 400) {
-          onResponseError({ error: response.statusText });
+          onGenericError({ error: response.statusText });
         } else {
           localStorage.setItem(localStorageTokenKey, response._data.token);
         }
@@ -62,10 +62,10 @@ export function useLivelyStore() {
     await useFetch(generateLivelyEndpoint('location/list'), {
       body: { token, type },
       method: 'post',
-      onResponseError,
+      onResponseError: onGenericError,
       onResponse({ response }) {
         if (response.status === 400) {
-          onResponseError({ error: response.statusText });
+          onGenericError({ error: response.statusText });
         } else {
           propertyLocationList.value = response._data.locations;
         }
@@ -76,26 +76,24 @@ export function useLivelyStore() {
   }
 
   async function getPropertyList(queryParameters: GetPropertyListParameters) {
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
 
-    await initHelloClient();
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
+        body: { token, ...queryParameters },
+        onRequestError: onGenericError,
+        method: 'post',
+      });
 
-    const token = localStorage.getItem(localStorageTokenKey);
-
-    await useFetch(generateLivelyEndpoint('property/list'), {
-      body: { token, ...queryParameters },
-      method: 'post',
-      onResponseError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onResponseError({ error: response.statusText });
-        } else {
-          propertyList.value = response._data.properties;
-        }
-      },
-    });
-
-    isLoading.value = false;
+      propertyList.value = data.value?.properties || [];
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function getAgencyList(locationId?: number) {
@@ -110,10 +108,10 @@ export function useLivelyStore() {
     await useFetch(generateLivelyEndpoint('agency/list'), {
       body: { token, location: locationId },
       method: 'post',
-      onResponseError,
+      onResponseError: onGenericError,
       onResponse({ response }) {
         if (response.status === 400) {
-          onResponseError({ error: response.statusText });
+          onGenericError({ error: response.statusText });
         } else {
           agencyList.value = response._data.agencies;
         }
@@ -137,10 +135,10 @@ export function useLivelyStore() {
     await useFetch(generateLivelyEndpoint('property/'), {
       body: { token, slug },
       method: 'post',
-      onResponseError,
+      onResponseError: onGenericError,
       onResponse({ response }) {
         if (response.status === 400) {
-          onResponseError({ error: response.statusText });
+          onGenericError({ error: response.statusText });
         } else {
           propertyBySlug.value = response._data.property;
         }
@@ -164,10 +162,10 @@ export function useLivelyStore() {
     await useFetch(generateLivelyEndpoint('agency/'), {
       body: { token, slug },
       method: 'post',
-      onResponseError,
+      onResponseError: onGenericError,
       onResponse({ response }) {
         if (response.status === 400) {
-          onResponseError({ error: response.statusText });
+          onGenericError({ error: response.statusText });
         } else {
           agencyBySlug.value = response._data.agency;
         }
