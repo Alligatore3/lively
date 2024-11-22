@@ -17,19 +17,19 @@
 
     <div class="flex gap-2 mt-16">
       <div class="flex flex-grow flex-col gap-3">
-        <div class="h-4 bg-gray-200 rounded-full mb-9"></div>
+        <USkeleton class="h-6 bg-gray-200 rounded-full mb-9" />
 
-        <div class="h-3 bg-gray-200 rounded-full"></div>
+        <USkeleton class="h-4 bg-gray-200 rounded-full" />
 
-        <div class="h-2 bg-gray-200 rounded-full"></div>
+        <USkeleton class="h- bg-gray-200 rounded-full" />
       </div>
 
       <div class="flex flex-grow flex-col gap-3">
-        <div class="h-4 bg-transparent rounded-full mb-9"></div>
+        <USkeleton class="h-6 bg-transparent rounded-full mb-9" />
 
-        <div class="h-3 bg-gray-200 rounded-full"></div>
+        <USkeleton class="h-4 bg-gray-200 rounded-full" />
 
-        <div class="h-2 bg-gray-200 rounded-full"></div>
+        <USkeleton class="h- bg-gray-200 rounded-full" />
       </div>
     </div>
 
