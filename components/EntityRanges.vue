@@ -14,10 +14,7 @@ const { onRangeChange } = defineProps<Props>();
 
 const sliderValues = ref([minValue.value, maxValue.value]);
 
-function onInputChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  const { name, value } = target;
-
+function onInputChange(value: string, name: string) {
   if (name === 'minValue') {
     minValue.value = parseInt(value, 10);
     sliderValues.value = [minValue.value, maxValue.value];
@@ -51,19 +48,23 @@ function onSliderChange(values: number[]) {
     <VueSlider v-model="sliderValues" @change="onSliderChange" tooltip="none" />
 
     <div class="flex gap-2 w-full align-center">
-      <input
-        class="w-[50px] border rounded dark:bg-white"
-        @change="onInputChange"
+      <UInput
+        :ui="{ form: 'w-[50px] border rounded dark:bg-white' }"
+        @change="(value: string) => onInputChange(value, 'minValue')"
         v-model="minValue"
+        variant="none"
         name="minValue"
         type="number"
+        size="2xs"
         min="0"
       />
       <span> - </span>
-      <input
-        class="w-[50px] border rounded dark:bg-white"
-        @change="onInputChange"
+      <UInput
+        size="2xs"
+        :ui="{ form: 'w-[50px] border rounded dark:bg-white' }"
+        @change="(value: string) => onInputChange(value, 'maxValue')"
         v-model="maxValue"
+        variant="none"
         name="maxValue"
         type="number"
         min="0"
