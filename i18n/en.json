@@ -74,6 +74,10 @@
     "price": "Price",
     "squareMeters": "Square meters",
     "rooms": "Rooms",
-    "results": "{count} results"
+    "results": "{count} results",
+    "optionals": "Optionals",
+    "tatami": "Tatami",
+    "furnished": "Furnished",
+    "kitchen": "Kitchen"
   }
 }

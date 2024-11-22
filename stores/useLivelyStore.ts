@@ -76,8 +76,6 @@ export function useLivelyStore() {
   }
 
   async function getPropertyList(queryParameters: GetPropertyListParameters) {
-    if (isLoading.value) return;
-
     isLoading.value = true;
 
     await initHelloClient();

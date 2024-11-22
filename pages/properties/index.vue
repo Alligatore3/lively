@@ -14,6 +14,12 @@ const router = useRouter();
 
 const propertyLocation = ref<number | null>(null);
 
+const hasTatami = ref<boolean>(false);
+
+const hasKitchen = ref<boolean>(false);
+
+const hasFurnished = ref<boolean>(false);
+
 const queryPropertyType = computed(() => generatePropertyQueryType(route));
 
 const { getPropertyList, propertyList, isLoading: isPropertyListLoading } = useLivelyStore();
@@ -34,8 +40,6 @@ async function onFilterChange(params: GetPropertyListParameters) {
 const fetchPropertyListByType = async () => {
   await onFilterChange({ type: queryPropertyType.value });
 
-  if (isLoading.value) return;
-
   const params = route.query as unknown as GetPropertyListParameters;
   getPropertyList(params);
 };
@@ -49,6 +53,10 @@ const onFiltersReset = async () => {
 
   propertyLocation.value = null;
 
+  hasFurnished.value = false;
+  hasKitchen.value = false;
+  hasTatami.value = false;
+
   if (isLoading.value) return;
 
   getPropertyList({ type });
@@ -56,6 +64,8 @@ const onFiltersReset = async () => {
 
 function onPropertyLocationChange() {
   const location = Number(propertyLocation.value);
+  if (!location) return;
+
   const type = queryPropertyType.value;
 
   onFilterChange({ location, type });
@@ -156,6 +166,39 @@ onMounted(onPropertiesPageMount);
             </h3>
           </template>
         </EntityRanges>
+
+        <div class="flex flex-col gap-2">
+          <h3 class="text-lg font-bold">
+            {{ $t('filters.optionals') }}
+          </h3>
+
+          <UCheckbox
+            :label="$t('filters.tatami')"
+            v-model="hasTatami"
+            :ui="{
+              background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
+              labe: 'text-black dark:text-white',
+            }"
+          />
+
+          <UCheckbox
+            :label="$t('filters.furnished')"
+            v-model="hasFurnished"
+            :ui="{
+              background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
+              labe: 'text-black dark:text-white',
+            }"
+          />
+
+          <UCheckbox
+            :label="$t('filters.kitchen')"
+            v-model="hasKitchen"
+            :ui="{
+              background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
+              labe: 'text-black dark:text-white',
+            }"
+          />
+        </div>
 
         <div class="flex flex-col lg:flex-row gap-2">
           <button
