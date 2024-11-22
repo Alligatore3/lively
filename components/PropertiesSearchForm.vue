@@ -39,7 +39,7 @@ const formId = 'home-search-form';
             </select>
           </div>
 
-          <div class="divider"></div>
+          <UDivider class="w-px h-full py-2" orientation="vertical" />
 
           <div class="flex flex-1 flex-row md:flex-col w-full px-4 md:px-0 justify-between">
             <label for="location" class="font-semibold">
@@ -53,7 +53,7 @@ const formId = 'home-search-form';
             </select>
           </div>
 
-          <div class="divider"></div>
+          <UDivider class="w-px h-full py-2" orientation="vertical" />
 
           <div class="flex flex-1 flex-row md:flex-col w-full px-4 md:px-0 justify-between">
             <label for="priceRange" class="font-semibold">
@@ -97,9 +97,3 @@ const formId = 'home-search-form';
     </div>
   </form>
 </template>
-
-<style scoped>
-.divider {
-  @apply h-px md:h-[32px] w-full md:w-px bg-gray-200 md:flex;
-}
-</style>
