@@ -52,7 +52,7 @@ function onSliderChange(values: number[]) {
 
     <div class="flex gap-2 w-full align-center">
       <input
-        class="w-[50px] border rounded"
+        class="w-[50px] border rounded dark:bg-white"
         @change="onInputChange"
         v-model="minValue"
         name="minValue"
@@ -61,7 +61,7 @@ function onSliderChange(values: number[]) {
       />
       <span> - </span>
       <input
-        class="w-[50px] border rounded"
+        class="w-[50px] border rounded dark:bg-white"
         @change="onInputChange"
         v-model="maxValue"
         name="maxValue"

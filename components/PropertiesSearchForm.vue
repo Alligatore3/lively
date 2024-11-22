@@ -29,7 +29,14 @@ const formId = 'home-search-form';
             <label for="type" class="font-semibold">
               {{ $t('home.form.type.label') }}
             </label>
-            <select v-model="propertyType" name="type" id="type" :form="formId" :disabled="isLoading.value">
+            <select
+              :disabled="isLoading.value"
+              v-model="propertyType"
+              class="dark:bg-white"
+              :form="formId"
+              name="type"
+              id="type"
+            >
               <option value="buy">
                 {{ $t('home.form.type.values.buy') }}
               </option>
@@ -45,7 +52,14 @@ const formId = 'home-search-form';
             <label for="location" class="font-semibold">
               {{ $t('home.form.location.label') }}
             </label>
-            <select v-model="propertyLocation" name="location" id="location" :form="formId" :disabled="isLoading.value">
+            <select
+              :disabled="isLoading.value"
+              v-model="propertyLocation"
+              class="dark:bg-white"
+              name="location"
+              :form="formId"
+              id="location"
+            >
               <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
               <option :key="location.id" v-for="location in locations" :value="location.id">
                 {{ location.name }}
@@ -63,6 +77,7 @@ const formId = 'home-search-form';
               :placeholder="$t('home.form.priceRange.placeholder')"
               v-model="propertyPriceRange"
               :disabled="isLoading.value"
+              class="dark:bg-white"
               name="priceRange"
               id="priceRange"
               :form="formId"

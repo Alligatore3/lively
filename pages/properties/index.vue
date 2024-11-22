@@ -100,7 +100,7 @@ onMounted(onPropertiesPageMount);
           </div>
 
           <select
-            class="border rounded py-1 focus:outline-none"
+            class="border rounded py-1 focus:outline-none dark:bg-white"
             v-model="propertyLocation"
             :disabled="isLoading"
             name="location"
