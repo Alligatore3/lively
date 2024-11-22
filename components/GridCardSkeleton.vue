@@ -1,8 +1,5 @@
 <template>
-  <div
-    role="status"
-    class="rounded-2xl h-[284px] w-full max-w-sm p-4 border border-gray-200 shadow animate-pulse md:p-6 dark:border-gray-400"
-  >
+  <div role="status" class="rounded-2xl h-[284px] w-full max-w-sm p-4 shadow animate-pulse md:p-6">
     <div class="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-400">
       <svg
         class="w-10 h-10 text-gray-200 dark:text-gray-600"
