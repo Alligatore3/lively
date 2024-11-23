@@ -33,21 +33,26 @@ export function useLivelyStore() {
   }
 
   async function initHelloClient() {
-    const token = localStorage.getItem(localStorageTokenKey);
+    try {
+      const token = localStorage.getItem(localStorageTokenKey);
 
-    if (isString(token)) return;
-
-    await useFetch(generateLivelyEndpoint('hello/client'), {
-      method: 'post',
-      onResponseError: onGenericError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onGenericError({ error: response.statusText });
-        } else {
-          localStorage.setItem(localStorageTokenKey, response._data.token);
-        }
-      },
-    });
+      if (isString(token)) return;
+  
+      const { data } =  await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
+        onResponseError: onGenericError,
+        method: 'post',
+        onResponse({ response }) {
+          if (response.status === 400) {
+            onGenericError({ error: response.statusText });
+          }
+        },
+      });
+  
+      localStorage.setItem(localStorageTokenKey, data.value?.token ?? '');
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function getLocationList(type: PropertyType) {
@@ -93,28 +98,25 @@ export function useLivelyStore() {
   }
 
   async function getAgencyList(locationId?: number) {
-    if (isLoading.value) return;
+    try {
+      isLoading.value = true;
 
-    isLoading.value = true;
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { data } = await useFetch<{ agencies: Agency[]}>(generateLivelyEndpoint('agency/list'), {
+        body: { token, location: locationId },
+        onResponseError: onGenericError,
+        onRequestError: onGenericError,
+        method: 'post',
+      });
 
-    await initHelloClient();
-
-    const token = localStorage.getItem(localStorageTokenKey);
-
-    await useFetch(generateLivelyEndpoint('agency/list'), {
-      body: { token, location: locationId },
-      method: 'post',
-      onResponseError: onGenericError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onGenericError({ error: response.statusText });
-        } else {
-          agencyList.value = response._data.agencies;
-        }
-      },
-    });
-
-    isLoading.value = false;
+      agencyList.value = data.value?.agencies || [];
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function getPropertyBySlug(slug: Property['slug'] | null) {
