@@ -145,32 +145,29 @@ export function useLivelyStore() {
       isLoading.value = false;
     }
   }
-
+  
   async function getAgencyBySlug(slug: Agency['slug'] | null) {
-    if (!slug) return;
-
-    if (isLoading.value) return;
-
-    isLoading.value = true;
-
-    await initHelloClient();
-
-    const token = localStorage.getItem(localStorageTokenKey);
-
-    await useFetch(generateLivelyEndpoint('agency/'), {
-      body: { token, slug },
-      method: 'post',
-      onResponseError: onGenericError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onGenericError({ error: response.statusText });
-        } else {
-          agencyBySlug.value = response._data.agency;
-        }
-      },
-    });
-
-    isLoading.value = false;
+    try {
+      if (!slug) return;
+  
+      isLoading.value = true;
+  
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { data } = await useFetch<{ agency: Agency}>(generateLivelyEndpoint('agency/'), {
+        onResponseError: onGenericError,
+        onRequestError: onGenericError,
+        body: { token, slug },
+        method: 'post',
+      });
+  
+      agencyBySlug.value = data.value?.agency || null;
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   return {
