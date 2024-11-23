@@ -40,6 +40,7 @@ export function useLivelyStore() {
   
       const { data } =  await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
         onResponseError: onGenericError,
+        onRequestError: onGenericError,
         method: 'post',
         onResponse({ response }) {
           if (response.status === 400) {
@@ -64,6 +65,7 @@ export function useLivelyStore() {
       const token = localStorage.getItem(localStorageTokenKey);
   
       const { data } = await useFetch<{ locations: PropertyLocation[]}>(generateLivelyEndpoint('location/list'), {
+        onResponseError: onGenericError,
         onRequestError: onGenericError,
         body: { token, type },
         method: 'post',
@@ -86,6 +88,7 @@ export function useLivelyStore() {
   
       const { data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
         body: { token, ...queryParameters },
+        onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
@@ -118,32 +121,29 @@ export function useLivelyStore() {
       isLoading.value = false;
     }
   }
-
+  
   async function getPropertyBySlug(slug: Property['slug'] | null) {
-    if (!slug) return;
+    try {
+      if (!slug) return;
 
-    if (isLoading.value) return;
-
-    isLoading.value = true;
-
-    await initHelloClient();
-
-    const token = localStorage.getItem(localStorageTokenKey);
-
-    await useFetch(generateLivelyEndpoint('property/'), {
-      body: { token, slug },
-      method: 'post',
-      onResponseError: onGenericError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onGenericError({ error: response.statusText });
-        } else {
-          propertyBySlug.value = response._data.property;
-        }
-      },
-    });
-
-    isLoading.value = false;
+      isLoading.value = true;
+  
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { data } = await useFetch<{ property: Property}>(generateLivelyEndpoint('property/'), {
+        onResponseError: onGenericError,
+        onRequestError: onGenericError,
+        body: { token, slug },
+        method: 'post',
+      });
+  
+      propertyBySlug.value = data.value?.property || null;
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function getAgencyBySlug(slug: Agency['slug'] | null) {
