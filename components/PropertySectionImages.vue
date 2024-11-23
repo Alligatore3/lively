@@ -7,9 +7,7 @@ type Props = {
 
 const { property } = defineProps<Props>();
 
-const propertyImages = computed<string[]>(() =>
-  [property.image, property.image_2, property.image_3, property.image_4].filter(isString)
-); // to be removed
+const propertyImages = computed<string[]>(() => property.images.filter(isString));
 </script>
 
 <template>

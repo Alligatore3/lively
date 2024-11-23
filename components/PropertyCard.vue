@@ -7,10 +7,7 @@ type Props = {
 
 const { property } = defineProps<Props>();
 
-const propertyImage = computed<string>(() => {
-  const url = property.image || property.image_2 || property.image_3 || property.image_4;
-  return `url('${url}')`;
-});
+const propertyImage = computed<string>(() => `url('${property.images[0]}')`);
 </script>
 
 <template>

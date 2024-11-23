@@ -10,10 +10,7 @@ export type Property = {
   slug: string;
   id: number;
   id_agency: number;
-  image: string;
-  image_2: string;
-  image_3: string;
-  image_4: string;
+  images: string[];
   id_location: number;
   id_district: number;
   type: number;

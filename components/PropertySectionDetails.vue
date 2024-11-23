@@ -31,7 +31,7 @@ useHead({
   meta: generateSocialMetaAttributes({
     title: `Lively - ${property.title}`,
     description: property.description,
-    src: property.image,
+    src: property.images[0],
     url: location.href,
     width: 180,
     height: 110,
