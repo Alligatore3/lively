@@ -51,28 +51,24 @@ export function useLivelyStore() {
   }
 
   async function getLocationList(type: PropertyType) {
-    if (isLoading.value) return;
+    try {
+      isLoading.value = true;
 
-    isLoading.value = true;
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { data } = await useFetch<{ locations: PropertyLocation[]}>(generateLivelyEndpoint('location/list'), {
+        onRequestError: onGenericError,
+        body: { token, type },
+        method: 'post',
+      });
 
-    await initHelloClient();
-
-    const token = localStorage.getItem(localStorageTokenKey);
-
-    await useFetch(generateLivelyEndpoint('location/list'), {
-      body: { token, type },
-      method: 'post',
-      onResponseError: onGenericError,
-      onResponse({ response }) {
-        if (response.status === 400) {
-          onGenericError({ error: response.statusText });
-        } else {
-          propertyLocationList.value = response._data.locations;
-        }
-      },
-    });
-
-    isLoading.value = false;
+      propertyLocationList.value = data.value?.locations || [];
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function getPropertyList(queryParameters: GetPropertyListParameters) {
