@@ -111,8 +111,8 @@ onMounted(onPropertiesPageMount);
 
           <select
             class="border rounded py-1 focus:outline-none dark:bg-white"
+            :disabled="isLoading || locations.length === 0"
             v-model="propertyLocation"
-            :disabled="isLoading"
             name="location"
           >
             <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>

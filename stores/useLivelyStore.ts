@@ -9,6 +9,10 @@ import { isString } from '@/utils/isString';
 const localStorageTokenKey = 'LivelyToken';
 
 export function useLivelyStore() {
+  const { t } = useI18n();
+
+  const toast = useToast()
+
   const isLoading = useState<boolean>('isLoading', () => false);
 
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
@@ -22,8 +26,13 @@ export function useLivelyStore() {
   const propertyBySlug = useState<Property | null>('propertyBySlug', () => null);
 
   function onGenericError({ error }: { error: string | Record<string, string> }) {
-    const text = isString(error) ? error : error.message;
-    console.error({text});
+    const title = isString(error) ? error : error.message;
+
+    toast.add({
+      icon: "i-heroicons-exclamation-circle",
+      color: 'red',
+      title,
+    })
   }
 
   async function initHelloClient() {
@@ -32,18 +41,17 @@ export function useLivelyStore() {
 
       if (isString(token)) return;
   
-      const { data } =  await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
+      const { status,  data } =  await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
-        onResponse({ response }) {
-          if (response.status === 400) {
-            onGenericError({ error: response.statusText });
-          }
-        },
       });
   
-      localStorage.setItem(localStorageTokenKey, data.value?.token ?? '');
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        localStorage.setItem(localStorageTokenKey, data.value?.token ?? '');
+      }
     } catch {
     } finally {
       isLoading.value = false;
@@ -58,14 +66,18 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { data } = await useFetch<{ locations: PropertyLocation[]}>(generateLivelyEndpoint('location/list'), {
+      const { status, data } = await useFetch<{ locations: PropertyLocation[]}>(generateLivelyEndpoint('location/list'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         body: { token, type },
         method: 'post',
       });
 
-      propertyLocationList.value = data.value?.locations || [];
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        propertyLocationList.value = data.value?.locations || [];
+      }
     } catch {
     } finally {
       isLoading.value = false;
@@ -80,14 +92,18 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
+      const { status, data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
         body: { token, ...queryParameters },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
 
-      propertyList.value = data.value?.properties || [];
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        propertyList.value = data.value?.properties || [];
+      }
     } catch {
     } finally {
       isLoading.value = false;
@@ -102,14 +118,18 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { data } = await useFetch<{ agencies: Agency[]}>(generateLivelyEndpoint('agency/list'), {
+      const { status, data } = await useFetch<{ agencies: Agency[]}>(generateLivelyEndpoint('agency/list'), {
         body: { token, location: locationId },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
 
-      agencyList.value = data.value?.agencies || [];
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        agencyList.value = data.value?.agencies || [];
+      }
     } catch {
     } finally {
       isLoading.value = false;
@@ -126,14 +146,18 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { data } = await useFetch<{ property: Property}>(generateLivelyEndpoint('property/'), {
+      const { status, data } = await useFetch<{ property: Property}>(generateLivelyEndpoint('property/'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         body: { token, slug },
         method: 'post',
       });
   
-      propertyBySlug.value = data.value?.property || null;
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        propertyBySlug.value = data.value?.property || null;
+      }
     } catch {
     } finally {
       isLoading.value = false;
@@ -150,14 +174,18 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { data } = await useFetch<{ agency: Agency}>(generateLivelyEndpoint('agency/'), {
+      const { status, data } = await useFetch<{ agency: Agency}>(generateLivelyEndpoint('agency/'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         body: { token, slug },
         method: 'post',
       });
   
-      agencyBySlug.value = data.value?.agency || null;
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        agencyBySlug.value = data.value?.agency || null;
+      }
     } catch {
     } finally {
       isLoading.value = false;

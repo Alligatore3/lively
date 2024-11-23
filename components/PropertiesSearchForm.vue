@@ -53,7 +53,7 @@ const formId = 'home-search-form';
               {{ $t('home.form.location.label') }}
             </label>
             <select
-              :disabled="isLoading.value"
+              :disabled="isLoading.value || locations?.length === 0"
               v-model="propertyLocation"
               class="dark:bg-white"
               name="location"

@@ -10,6 +10,7 @@
   },
   "shared": {
     "noFilterResults": "No results for these filters 😔 Try to change them.",
+    "genericError": "An error occurred, please try again later.",
     "readMore": "Read more",
     "readLess": "Read less",
     "submit": "Submit",

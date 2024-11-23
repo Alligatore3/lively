@@ -23,7 +23,9 @@ useSeoMeta({
 
   <NuxtLayout name="with-header">
     <NuxtPage />
-    <NuxtSnackbar />
+
     <UModals />
+
+    <UNotifications :ui="{ width: 'w-full sm:w-[420px]' }" />
   </NuxtLayout>
 </template>
