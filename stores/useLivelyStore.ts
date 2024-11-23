@@ -9,8 +9,6 @@ import { isString } from '@/utils/isString';
 const localStorageTokenKey = 'LivelyToken';
 
 export function useLivelyStore() {
-  const snackbar = useSnackbar();
-
   const isLoading = useState<boolean>('isLoading', () => false);
 
   const propertyLocationList = useState<PropertyLocation[]>('locationList', () => []);
@@ -25,11 +23,7 @@ export function useLivelyStore() {
 
   function onGenericError({ error }: { error: string | Record<string, string> }) {
     const text = isString(error) ? error : error.message;
-
-    snackbar.add({
-      type: 'error',
-      text,
-    });
+    console.error({text});
   }
 
   async function initHelloClient() {

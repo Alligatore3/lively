@@ -16,7 +16,6 @@
     "@nuxtjs/i18n": "^8.5.2",
     "@vueuse/core": "^11.1.0",
     "nuxt": "^3.13.0",
-    "nuxt-snackbar": "^1.1.2",
     "vue": "latest",
     "vue-3-slider-component": "^1.0.1",
     "yup": "^1.4.0"

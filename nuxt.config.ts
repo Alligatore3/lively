@@ -12,12 +12,7 @@ export default defineNuxtConfig({
   // @see https://tailwindcss.nuxtjs.org/getting-started/installation
   modules: [['@nuxtjs/google-fonts',
     { families: { Raleway: true } },
-  ], '@nuxtjs/i18n', 'nuxt-snackbar', '@nuxt/image', '@nuxt/ui'],
-  snackbar: {
-    duration: 5000,
-    bottom: true,
-    right: true,
-  },
+  ], '@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui'],
   i18n: {
     vueI18n: './i18n.config.ts', // if you are using custom path, default
   },
