@@ -4,6 +4,7 @@
     "email": "Please enter a valid email address"
   },
   "form": {
+    "label": "Contact form",
     "labelName": "Your name",
     "labelEmail": "Your email",
     "labelMessage": "Your message"
@@ -14,7 +15,8 @@
     "readMore": "Read more",
     "readLess": "Read less",
     "submit": "Submit",
-    "reset": "Reset"
+    "reset": "Reset",
+    "close": "Close"
   },
   "logo": "Lively",
   "navigation": {

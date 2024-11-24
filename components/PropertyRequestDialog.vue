@@ -2,7 +2,20 @@
 import { object, string, type InferType } from 'yup';
 import type { FormSubmitEvent } from '#ui/types';
 
+import { useLivelyStore } from '@/stores/useLivelyStore';
+
 const { t } = useI18n();
+
+const modal = useModal();
+
+const route = useRoute();
+
+const { generatePropertyRequest, isLoading } = useLivelyStore();
+
+const propertyURLSlug = computed<string | null>(() => {
+  const slug = route.params.slug;
+  return isString(slug) ? slug : null;
+});
 
 const schema = object({
   email: string().email(t('validation.email')).required(t('validation.required')),
@@ -19,14 +32,30 @@ const state = reactive({
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with event.data
-  console.log(event.data);
+  const { message, email, name } = event.data;
+  const slug = propertyURLSlug.value;
+
+  if (!slug) return;
+
+  const response = await generatePropertyRequest({ slug, message, email, name });
+
+  console.log({ response });
 }
 </script>
 
 <template>
-  <UModal>
-    <UForm :schema="schema" :state="state" class="p-4 space-y-4" @submit="onSubmit">
+  <UModal :ui="{ width: 'w-96' }">
+    <UForm :schema="schema" :state="state" class="p-4 space-y-6" @submit="onSubmit">
+      <div class="flex justify-between items-center">
+        <h3>
+          {{ t('form.label') }}
+        </h3>
+
+        <UButton @click="modal.close" class="py-2 bg-black text-white dark:bg-white dark:text-black">
+          {{ t('shared.close') }}
+        </UButton>
+      </div>
+
       <UFormGroup :label="t('form.labelEmail')" name="email">
         <UInput v-model="state.email" />
       </UFormGroup>
@@ -39,7 +68,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UTextarea v-model="state.message" />
       </UFormGroup>
 
-      <UButton class="w-full justify-center flex bg-black text-white dark:bg-white dark:text-black" type="submit">
+      <UButton class="w-full py-4 justify-center flex bg-black text-white dark:bg-white dark:text-black" type="submit">
         {{ t('shared.submit') }}
       </UButton>
     </UForm>

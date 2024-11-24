@@ -1,5 +1,6 @@
 import { generateLivelyEndpoint } from '@/utils/generateLivelyEndpoint';
 import type { GetPropertyListParameters } from '@/types/GetPropertyListParameters';
+import type { PropertyRequestForm } from '@/types/PropertyRequestForm';
 import type { PropertyLocation } from '@/types/PropertyLocation';
 import type { PropertyType } from '@/types/PropertyType';
 import type { Property } from '@/types/Property';
@@ -192,6 +193,37 @@ export function useLivelyStore() {
     }
   }
 
+  async function generatePropertyRequest({
+    slug,
+    message,
+    email,
+    name,
+  }: PropertyRequestForm) {
+    try {
+      isLoading.value = true;
+  
+      await initHelloClient();
+  
+      const token = localStorage.getItem(localStorageTokenKey);
+  
+      const { status, data } = await useFetch(generateLivelyEndpoint('property/request'), {
+        body: { token, slug, message, email, name },
+        onResponseError: onGenericError,
+        onRequestError: onGenericError,
+        method: 'post',
+      });
+  
+      if(status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        console.log({ data })
+      }
+    } catch {
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   return {
     propertyLocationList,
     propertyBySlug,
@@ -199,6 +231,7 @@ export function useLivelyStore() {
     propertyList,
     agencyList,
     isLoading,
+    generatePropertyRequest,
     getPropertyBySlug,
     getAgencyBySlug,
     initHelloClient,
