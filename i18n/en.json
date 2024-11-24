@@ -7,7 +7,8 @@
     "label": "Contact form",
     "labelName": "Your name",
     "labelEmail": "Your email",
-    "labelMessage": "Your message"
+    "labelMessage": "Your message",
+    "requestSucceeded": "Your request has been sent successfully"
   },
   "shared": {
     "noFilterResults": "No results for these filters 😔 Try to change them.",

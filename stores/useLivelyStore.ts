@@ -206,17 +206,21 @@ export function useLivelyStore() {
   
       const token = localStorage.getItem(localStorageTokenKey);
   
-      const { status, data } = await useFetch(generateLivelyEndpoint('property/request'), {
+      const { status } = await useFetch(generateLivelyEndpoint('property/request'), {
         body: { token, slug, message, email, name },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
   
-      if(status.value === 'error') {
-        onGenericError({ error: t('shared.genericError') });
+      if(status.value === 'success') {
+        toast.add({
+          title: t('form.requestSucceeded'),
+          icon: "i-heroicons-check-circle",
+          color: 'green',
+        })
       } else {
-        console.log({ data })
+        onGenericError({ error: t('shared.genericError') });
       }
     } catch {
     } finally {

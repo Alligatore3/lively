@@ -3,6 +3,7 @@ import { object, string, type InferType } from 'yup';
 import type { FormSubmitEvent } from '#ui/types';
 
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import type { Property } from '@/types/Property';
 
 const { t } = useI18n();
 
@@ -12,7 +13,7 @@ const route = useRoute();
 
 const { generatePropertyRequest, isLoading } = useLivelyStore();
 
-const propertyURLSlug = computed<string | null>(() => {
+const propertyURLSlug = computed<Property['slug'] | null>(() => {
   const slug = route.params.slug;
   return isString(slug) ? slug : null;
 });
@@ -37,9 +38,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   if (!slug) return;
 
-  const response = await generatePropertyRequest({ slug, message, email, name });
+  await generatePropertyRequest({ slug, message, email, name });
 
-  console.log({ response });
+  modal.close();
 }
 </script>
 
@@ -68,7 +69,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UTextarea v-model="state.message" />
       </UFormGroup>
 
-      <UButton class="w-full py-4 justify-center flex bg-black text-white dark:bg-white dark:text-black" type="submit">
+      <UButton
+        class="w-full py-4 justify-center flex bg-black text-white dark:bg-white dark:text-black"
+        :loading="isLoading"
+        type="submit"
+      >
         {{ t('shared.submit') }}
       </UButton>
     </UForm>
