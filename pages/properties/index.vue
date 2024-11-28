@@ -6,6 +6,7 @@ import type { GetPropertyListParameters } from '@/types/GetPropertyListParameter
 import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import EntityRanges from '@/components/EntityRanges';
+import { DEFAULT_PROPERTY_TYPE } from '@/constants';
 import { ROUTES } from '@/constants';
 
 const route = useRoute();
@@ -45,6 +46,9 @@ const fetchPropertyListByType = async () => {
 };
 
 const onFiltersReset = async () => {
+  const queryValues = Object.values(route.query);
+  if (queryValues.length === 1 && queryValues[0] === DEFAULT_PROPERTY_TYPE) return;
+
   const type = queryPropertyType.value;
   await onFilterChange({ type });
 
@@ -82,6 +86,27 @@ function onPropertiesPageMount() {
 }
 
 watch(propertyLocation, onPropertyLocationChange);
+
+const onTatamiChange = (value: boolean) => {
+  const tatami = value ? 1 : 0;
+  const type = queryPropertyType.value;
+
+  onFilterChange({ tatami, type });
+};
+
+const onKitchenChange = (value: boolean) => {
+  const kitchen = value ? 1 : 0;
+  const type = queryPropertyType.value;
+
+  onFilterChange({ kitchen, type });
+};
+
+const onFurnishedChange = (value: boolean) => {
+  const furnished = value ? 1 : 0;
+  const type = queryPropertyType.value;
+
+  onFilterChange({ furnished, type });
+};
 
 onMounted(onPropertiesPageMount);
 </script>
@@ -174,28 +199,31 @@ onMounted(onPropertiesPageMount);
 
           <UCheckbox
             :label="$t('filters.tatami')"
+            v-on:change="onTatamiChange"
             v-model="hasTatami"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
-              labe: 'text-black dark:text-white',
+              label: 'text-black dark:text-black',
             }"
           />
 
           <UCheckbox
             :label="$t('filters.furnished')"
+            v-on:change="onFurnishedChange"
             v-model="hasFurnished"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
-              labe: 'text-black dark:text-white',
+              label: 'text-black dark:text-black',
             }"
           />
 
           <UCheckbox
             :label="$t('filters.kitchen')"
+            v-on:change="onKitchenChange"
             v-model="hasKitchen"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
-              labe: 'text-black dark:text-white',
+              label: 'text-black dark:text-black',
             }"
           />
         </div>

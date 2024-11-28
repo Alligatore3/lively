@@ -92,9 +92,14 @@ export function useLivelyStore() {
       await initHelloClient();
   
       const token = localStorage.getItem(localStorageTokenKey);
-  
+      const params = { ...queryParameters, 
+        furnished: queryParameters.furnished ? Number(queryParameters.furnished) : undefined,
+        kitchen: queryParameters.kitchen ? Number(queryParameters.kitchen) : undefined,
+        tatami: queryParameters.tatami ? Number(queryParameters.tatami) : undefined,
+      }
+
       const { status, data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
-        body: { token, ...queryParameters },
+        body: { token, ...params },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',

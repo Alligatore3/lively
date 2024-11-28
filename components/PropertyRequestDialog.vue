@@ -48,7 +48,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <UModal :ui="{ width: 'w-96' }">
     <UForm :schema="schema" :state="state" class="p-4 space-y-6" @submit="onSubmit">
       <div class="flex justify-between items-center">
-        <h3>
+        <h3 class="dark:text-white">
           {{ t('form.label') }}
         </h3>
 
