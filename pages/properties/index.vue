@@ -13,7 +13,7 @@ const route = useRoute();
 
 const router = useRouter();
 
-const propertyLocation = ref<number | null>(null);
+const propertyLocation = ref<number | undefined>(undefined);
 
 const hasTatami = ref<boolean>(false);
 
@@ -55,7 +55,7 @@ const onFiltersReset = async () => {
   // Remove all other filters if they exists
   router.push({ query: { type } });
 
-  propertyLocation.value = null;
+  propertyLocation.value = undefined;
 
   hasFurnished.value = false;
   hasKitchen.value = false;
@@ -78,7 +78,7 @@ function onPropertyLocationChange() {
 function onPropertiesPageMount() {
   fetchPropertyListByType();
 
-  propertyLocation.value = Number(route.query.location) || null;
+  propertyLocation.value = Number(route.query.location) || undefined;
 
   if (!locations.value.length) {
     getLocationList(queryPropertyType.value);
@@ -134,17 +134,12 @@ onMounted(onPropertiesPageMount);
             </CaptionText>
           </div>
 
-          <select
-            class="border rounded py-1 focus:outline-none dark:bg-white"
-            :disabled="isLoading || locations.length === 0"
-            v-model="propertyLocation"
-            name="location"
-          >
-            <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
-            <option :key="location.id" v-for="location in locations" :value="location.id">
-              {{ location.name }}
-            </option>
-          </select>
+          <USelectMenu v-model="propertyLocation" :options="locations" 
+          value-attribute="id"
+          option-attribute="name"
+          :disabled="isLoading || locations.length === 0"
+          :placeholder="$t('home.form.location.placeholder')"
+          />
         </div>
 
         <EntityRanges
