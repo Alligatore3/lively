@@ -21,9 +21,9 @@ onMounted(fetchAgencyPropertyListBySlug);
   <ContentWithSidebar>
     <template #sidebar>
       <div v-if="isLoading" role="status" class="flex gap-6 flex-col animate-pulse md:px-6 dark:border-gray-400">
-        <div class="h-16 w-16 bg-gray-200 rounded-full dark:bg-gray-400"></div>
-        <div class="h-2 w-2/3 bg-gray-200 rounded-full dark:bg-gray-400"></div>
-        <div class="h-2 w-1/2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+        <div class="h-16 w-16 bg-gray-200 rounded-full dark:bg-gray-400" />
+        <div class="h-2 w-2/3 bg-gray-200 rounded-full dark:bg-gray-400" />
+        <div class="h-2 w-1/2 bg-gray-200 rounded-full dark:bg-gray-400" />
       </div>
 
       <AgencyInfo v-else-if="agencyBySlug" :agency="agencyBySlug" />
@@ -32,7 +32,7 @@ onMounted(fetchAgencyPropertyListBySlug);
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />
 
-      <ContentGridListSwitcher v-else-if="agencyBySlug" :listLenght="agencyBySlug.properties.length">
+      <ContentGridListSwitcher v-else-if="agencyBySlug" :list-lenght="agencyBySlug.properties.length">
         <template #loop-list>
           <li v-for="property in agencyBySlug.properties" :key="property.id">
             <NuxtLink :to="{ name: 'properties-slug', params: { slug: property.slug } }">

@@ -15,7 +15,7 @@ const { agency } = defineProps<Props>();
         class="border rounded-full w-16 h-16 mx-auto my-6"
         :src="agency.image"
         :alt="agency.name"
-        objectFit="cover"
+        object-fit="cover"
         layout="fill"
       />
     </div>

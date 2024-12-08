@@ -52,7 +52,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           {{ t('form.label') }}
         </h3>
 
-        <UButton @click="modal.close" class="py-2 bg-black text-white dark:bg-white dark:text-black">
+        <UButton class="py-2 bg-black text-white dark:bg-white dark:text-black" @click="modal.close">
           {{ t('shared.close') }}
         </UButton>
       </div>

@@ -6,8 +6,7 @@ import type { GetPropertyListParameters } from '@/types/GetPropertyListParameter
 import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import EntityRanges from '@/components/EntityRanges';
-import { DEFAULT_PROPERTY_TYPE } from '@/constants';
-import { ROUTES } from '@/constants';
+import { DEFAULT_PROPERTY_TYPE, ROUTES } from '@/constants';
 
 const route = useRoute();
 
@@ -116,7 +115,7 @@ onMounted(onPropertiesPageMount);
     <template #sidebar>
       <div class="flex flex-col gap-8 px-2">
         <PropertyTypeToggle
-          :onToggleChange="
+          :on-toggle-change="
             (type: PropertyType) => {
               onFilterChange({ type });
             }
@@ -134,16 +133,18 @@ onMounted(onPropertiesPageMount);
             </CaptionText>
           </div>
 
-          <USelectMenu v-model="propertyLocation" :options="locations" 
-          value-attribute="id"
-          option-attribute="name"
-          :disabled="isLoading || locations.length === 0"
-          :placeholder="$t('home.form.location.placeholder')"
+          <USelectMenu
+            v-model="propertyLocation"
+            :options="locations"
+            value-attribute="id"
+            option-attribute="name"
+            :disabled="isLoading || locations.length === 0"
+            :placeholder="$t('home.form.location.placeholder')"
           />
         </div>
 
         <EntityRanges
-          :onRangeChange="
+          :on-range-change="
             (values: number[]) => {
               const [price_low, price_high] = values;
               onFilterChange({ type: queryPropertyType, price_low, price_high });
@@ -158,7 +159,7 @@ onMounted(onPropertiesPageMount);
         </EntityRanges>
 
         <EntityRanges
-          :onRangeChange="
+          :on-range-change="
             (values: number[]) => {
               const [area_low, area_high] = values;
               onFilterChange({ type: queryPropertyType, area_low, area_high });
@@ -173,7 +174,7 @@ onMounted(onPropertiesPageMount);
         </EntityRanges>
 
         <EntityRanges
-          :onRangeChange="
+          :on-range-change="
             (values: number[]) => {
               const [rooms_low, rooms_high] = values;
               onFilterChange({ type: queryPropertyType, rooms_low, rooms_high });
@@ -193,51 +194,51 @@ onMounted(onPropertiesPageMount);
           </h3>
 
           <UCheckbox
-            :label="$t('filters.tatami')"
-            v-on:change="onTatamiChange"
             v-model="hasTatami"
+            :label="$t('filters.tatami')"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
               label: 'text-black dark:text-black',
             }"
+            @change="onTatamiChange"
           />
 
           <UCheckbox
-            :label="$t('filters.furnished')"
-            v-on:change="onFurnishedChange"
             v-model="hasFurnished"
+            :label="$t('filters.furnished')"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
               label: 'text-black dark:text-black',
             }"
+            @change="onFurnishedChange"
           />
 
           <UCheckbox
-            :label="$t('filters.kitchen')"
-            v-on:change="onKitchenChange"
             v-model="hasKitchen"
+            :label="$t('filters.kitchen')"
             :ui="{
               background: 'bg-white dark:bg-white focus:bg-black focus:dark:bg-black dark:checked:bg-black',
               label: 'text-black dark:text-black',
             }"
+            @change="onKitchenChange"
           />
         </div>
 
         <div class="flex flex-col lg:flex-row gap-2">
           <button
             class="w-full lg:w-1/2 border py-2 font-semibold rounded"
-            @click="onFiltersReset"
             :disabled="isLoading"
+            @click="onFiltersReset"
           >
             {{ $t('shared.reset') }}
           </button>
 
           <button
             class="w-full lg:w-1/2 bg-black text-white font-semibold py-2 rounded flex align-center justify-center"
-            @click="fetchPropertyListByType"
             :disabled="isLoading"
+            @click="fetchPropertyListByType"
           >
-            <Spinner v-if="isLoading" classes="w-[24px] after:w-[24px] h-[24px] after:h-[24px] after:border" />
+            <SpinnerLoader v-if="isLoading" classes="w-[24px] after:w-[24px] h-[24px] after:h-[24px] after:border" />
             <span v-else>
               {{ $t('shared.submit') }}
             </span>
@@ -249,7 +250,7 @@ onMounted(onPropertiesPageMount);
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />
 
-      <ContentGridListSwitcher v-else :listLenght="propertyList.length">
+      <ContentGridListSwitcher v-else :list-lenght="propertyList.length">
         <template #loop-list>
           <template v-if="propertyList.length > 0">
             <li v-for="property in propertyList" :key="property.id">

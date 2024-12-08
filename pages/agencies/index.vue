@@ -12,13 +12,13 @@ onMounted(() => {
 
 <template>
   <ContentWithSidebar>
-    <template #sidebar></template>
+    <template #sidebar />
 
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />
 
-      <ContentGridListSwitcher v-else :listLenght="agencyList.length">
-        <template #loop-list v-if="agencyList.length > 0">
+      <ContentGridListSwitcher v-else :list-lenght="agencyList.length">
+        <template v-if="agencyList.length > 0" #loop-list>
           <template v-if="agencyList.length > 0">
             <li v-for="agency in agencyList" :key="agency.id">
               <NuxtLink :to="{ name: 'agencies-slug', params: { slug: agency.slug } }">

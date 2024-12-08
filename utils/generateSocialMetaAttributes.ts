@@ -1,12 +1,12 @@
 type SocialAttributes = {
-    src: string;
-    width: number;
-    height: number;
-    url: string;
-    title?: string;
-    description?: string;
-  };
-  
+  src: string;
+  width: number;
+  height: number;
+  url: string;
+  title?: string;
+  description?: string;
+};
+
 export const livelyTitle = 'Lively - Real Estate Platform';
 
 export const livelyDescription =

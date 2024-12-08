@@ -7,7 +7,7 @@ const { classes } = defineProps<Props>();
 </script>
 
 <template>
-  <div class="spinner text-white" :class="classes"></div>
+  <div class="spinner text-white" :class="classes" />
 </template>
 
 <style lang="css" scoped>

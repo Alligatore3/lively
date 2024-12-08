@@ -6,7 +6,7 @@ export type Agency = {
   id: number;
   name: string;
   description: string;
-  properties: Property[]
+  properties: Property[];
   image: string;
   slug: string;
   address: string;

@@ -19,7 +19,7 @@ const isRentSelected = computed(() => route.query.type === 'rent');
 <template>
   <div class="flex flex-wrap flex-row justify-center md:flex-col lg:flex-row border rounded-lg mx-auto w-full py-2">
     <div class="hidden">
-      <input type="checkbox" id="propertyType" name="propertyType" v-model="isBuySelected" />
+      <input id="propertyType" v-model="isBuySelected" type="checkbox" name="propertyType" />
       <label for="propertyType">Property type</label>
     </div>
 

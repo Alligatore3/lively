@@ -1,10 +1,10 @@
+<!-- eslint-disable vue/no-v-html -->
 <script setup lang="ts">
 import PropertiesSearchForm from '@/components/PropertiesSearchForm';
 import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
-import { DEFAULT_PROPERTY_TYPE } from '@/constants';
+import { DEFAULT_PROPERTY_TYPE, ROUTES } from '@/constants';
 import houseImage from '~/assets/images/house.png';
-import { ROUTES } from '@/constants';
 
 const backgroundImage = `url(${houseImage})`;
 
@@ -49,13 +49,13 @@ onMounted(fetchLocationsByType);
         </p>
 
         <PropertiesSearchForm
-          class="mt-16"
           v-model:property-price-range="propertyPriceRange"
           v-model:property-location="propertyLocation"
           v-model:property-type="propertyType"
+          class="mt-16"
           :locations="propertyLocationList"
-          :isLoading="isLoading"
-          :onSubmit="onSubmit"
+          :is-loading="isLoading"
+          :on-submit="onSubmit"
         />
       </div>
     </div>

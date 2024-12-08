@@ -45,29 +45,29 @@ function onSliderChange(values: number[]) {
   <div class="flex flex-col gap-4">
     <slot name="label" />
 
-    <VueSlider v-model="sliderValues" @change="onSliderChange" tooltip="none" />
+    <VueSlider v-model="sliderValues" tooltip="none" @change="onSliderChange" />
 
     <div class="flex gap-2 w-full align-center">
       <UInput
-        :ui="{ form: 'w-[50px] border rounded dark:bg-white' }"
-        @change="(value: string) => onInputChange(value, 'minValue')"
         v-model="minValue"
+        :ui="{ form: 'w-[50px] border rounded dark:bg-white' }"
         variant="none"
         name="minValue"
         type="number"
         size="2xs"
         min="0"
+        @change="(value: string) => onInputChange(value, 'minValue')"
       />
       <span> - </span>
       <UInput
+        v-model="maxValue"
         size="2xs"
         :ui="{ form: 'w-[50px] border rounded dark:bg-white' }"
-        @change="(value: string) => onInputChange(value, 'maxValue')"
-        v-model="maxValue"
         variant="none"
         name="maxValue"
         type="number"
         min="0"
+        @change="(value: string) => onInputChange(value, 'maxValue')"
       />
     </div>
   </div>

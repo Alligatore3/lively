@@ -30,12 +30,12 @@ const formId = 'home-search-form';
               {{ $t('home.form.type.label') }}
             </label>
             <select
-              :disabled="isLoading.value"
+              id="type"
               v-model="propertyType"
+              :disabled="isLoading.value"
               class="dark:bg-white"
               :form="formId"
               name="type"
-              id="type"
             >
               <option value="buy">
                 {{ $t('home.form.type.values.buy') }}
@@ -53,15 +53,15 @@ const formId = 'home-search-form';
               {{ $t('home.form.location.label') }}
             </label>
             <select
-              :disabled="isLoading.value || locations?.length === 0"
+              id="location"
               v-model="propertyLocation"
+              :disabled="isLoading.value || locations?.length === 0"
               class="dark:bg-white"
               name="location"
               :form="formId"
-              id="location"
             >
               <option :value="null" disabled selected hidden>{{ $t('home.form.location.placeholder') }}</option>
-              <option :key="location.id" v-for="location in locations" :value="location.id">
+              <option v-for="location in locations" :key="location.id" :value="location.id">
                 {{ location.name }}
               </option>
             </select>
@@ -74,12 +74,12 @@ const formId = 'home-search-form';
               {{ $t('home.form.priceRange.label') }}
             </label>
             <input
-              :placeholder="$t('home.form.priceRange.placeholder')"
+              id="priceRange"
               v-model="propertyPriceRange"
+              :placeholder="$t('home.form.priceRange.placeholder')"
               :disabled="isLoading.value"
               class="dark:bg-white"
               name="priceRange"
-              id="priceRange"
               :form="formId"
               type="number"
             />
@@ -88,7 +88,7 @@ const formId = 'home-search-form';
 
         <div id="desktop-submit" class="hidden md:flex shrink-0">
           <div v-if="isLoading" class="rounded-full bg-black w-12 h-12">
-            <Spinner classes="w-[32px] after:w-[32px] h-[32px] after:h-[32px] after:m-[8px] after:border-2" />
+            <SpinnerLoader classes="w-[32px] after:w-[32px] h-[32px] after:h-[32px] after:m-[8px] after:border-2" />
           </div>
           <button v-else type="submit" class="rounded-full bg-black w-12 h-12 text-white">
             <LensIcon class="mx-auto" />
@@ -99,7 +99,7 @@ const formId = 'home-search-form';
 
     <div id="mobile-submit" class="block mt-4 w-full md:hidden">
       <div v-if="isLoading" class="rounded-full flex justify-center bg-black py-3">
-        <Spinner classes="w-[16px] after:w-[16px] h-[16px] after:h-[16px] after:border" />
+        <SpinnerLoader classes="w-[16px] after:w-[16px] h-[16px] after:h-[16px] after:border" />
       </div>
       <button
         v-else

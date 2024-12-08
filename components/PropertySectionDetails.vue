@@ -87,8 +87,8 @@ function openModal() {
 
       <button
         v-if="isSupported"
-        @click="share(sharePropertyAttributes)"
         class="flex w-full md:w-auto flex-row gap-2 border rounded-md px-5 py-3 font-semibold justify-center"
+        @click="share(sharePropertyAttributes)"
       >
         <DownloadIcon class="text-black" />
         {{ $t('properties.share') }}
@@ -127,7 +127,7 @@ function openModal() {
                 class="border rounded-full w-8 h-8"
                 :src="property.agency_image"
                 :alt="property.agency_name"
-                objectFit="cover"
+                object-fit="cover"
                 layout="fill"
               />
               <p class="font-bold truncate">
@@ -136,7 +136,7 @@ function openModal() {
             </div>
           </NuxtLink>
 
-          <button @click="openModal" class="w-full lg:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold">
+          <button class="w-full lg:w-1/2 bg-black text-white rounded-md px-5 py-3 font-semibold" @click="openModal">
             {{ t('properties.sendRequest') }}
           </button>
         </div>
@@ -151,9 +151,9 @@ function openModal() {
 
         <ul class="flex flex-row gap-5 mt-9 flex-wrap">
           <li
-            class="flex flex-row items-center gap-1 font-bold"
-            :key="attribute.key"
             v-for="attribute in propertyAttributeListAvailableMap"
+            :key="attribute.key"
+            class="flex flex-row items-center gap-1 font-bold"
           >
             <CheckIcon />
             {{ attribute.label }}

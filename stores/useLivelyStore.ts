@@ -12,7 +12,7 @@ const localStorageTokenKey = 'LivelyToken';
 export function useLivelyStore() {
   const { t } = useI18n();
 
-  const toast = useToast()
+  const toast = useToast();
 
   const isLoading = useState<boolean>('isLoading', () => false);
 
@@ -30,10 +30,10 @@ export function useLivelyStore() {
     const title = isString(error) ? error : error.message;
 
     toast.add({
-      icon: "i-heroicons-exclamation-circle",
+      icon: 'i-heroicons-exclamation-circle',
       color: 'red',
       title,
-    })
+    });
   }
 
   async function initHelloClient() {
@@ -41,19 +41,20 @@ export function useLivelyStore() {
       const token = localStorage.getItem(localStorageTokenKey);
 
       if (isString(token)) return;
-  
-      const { status,  data } =  await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
+
+      const { status, data } = await useFetch<{ token: string }>(generateLivelyEndpoint('hello/client'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
-  
-      if(status.value === 'error') {
+
+      if (status.value === 'error') {
         onGenericError({ error: t('shared.genericError') });
       } else {
         localStorage.setItem(localStorageTokenKey, data.value?.token ?? '');
       }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }
@@ -64,22 +65,26 @@ export function useLivelyStore() {
       isLoading.value = true;
 
       await initHelloClient();
-  
-      const token = localStorage.getItem(localStorageTokenKey);
-  
-      const { status, data } = await useFetch<{ locations: PropertyLocation[]}>(generateLivelyEndpoint('location/list'), {
-        onResponseError: onGenericError,
-        onRequestError: onGenericError,
-        body: { token, type },
-        method: 'post',
-      });
 
-      if(status.value === 'error') {
+      const token = localStorage.getItem(localStorageTokenKey);
+
+      const { status, data } = await useFetch<{ locations: PropertyLocation[] }>(
+        generateLivelyEndpoint('location/list'),
+        {
+          onResponseError: onGenericError,
+          onRequestError: onGenericError,
+          body: { token, type },
+          method: 'post',
+        }
+      );
+
+      if (status.value === 'error') {
         onGenericError({ error: t('shared.genericError') });
       } else {
         propertyLocationList.value = data.value?.locations || [];
       }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }
@@ -90,27 +95,29 @@ export function useLivelyStore() {
       isLoading.value = true;
 
       await initHelloClient();
-  
+
       const token = localStorage.getItem(localStorageTokenKey);
-      const params = { ...queryParameters, 
+      const params = {
+        ...queryParameters,
         furnished: queryParameters.furnished ? Number(queryParameters.furnished) : undefined,
         kitchen: queryParameters.kitchen ? Number(queryParameters.kitchen) : undefined,
         tatami: queryParameters.tatami ? Number(queryParameters.tatami) : undefined,
-      }
+      };
 
-      const { status, data } = await useFetch<{ properties: Property[]}>(generateLivelyEndpoint('property/list'), {
+      const { status, data } = await useFetch<{ properties: Property[] }>(generateLivelyEndpoint('property/list'), {
         body: { token, ...params },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
 
-      if(status.value === 'error') {
+      if (status.value === 'error') {
         onGenericError({ error: t('shared.genericError') });
       } else {
         propertyList.value = data.value?.properties || [];
       }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }
@@ -121,113 +128,112 @@ export function useLivelyStore() {
       isLoading.value = true;
 
       await initHelloClient();
-  
+
       const token = localStorage.getItem(localStorageTokenKey);
-  
-      const { status, data } = await useFetch<{ agencies: Agency[]}>(generateLivelyEndpoint('agency/list'), {
+
+      const { status, data } = await useFetch<{ agencies: Agency[] }>(generateLivelyEndpoint('agency/list'), {
         body: { token, location: locationId },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
 
-      if(status.value === 'error') {
+      if (status.value === 'error') {
         onGenericError({ error: t('shared.genericError') });
       } else {
         agencyList.value = data.value?.agencies || [];
       }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }
   }
-  
+
   async function getPropertyBySlug(slug: Property['slug'] | null) {
     try {
       if (!slug) return;
 
       isLoading.value = true;
-  
+
       await initHelloClient();
-  
+
       const token = localStorage.getItem(localStorageTokenKey);
-  
-      const { status, data } = await useFetch<{ property: Property}>(generateLivelyEndpoint('property/'), {
+
+      const { status, data } = await useFetch<{ property: Property }>(generateLivelyEndpoint('property/'), {
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         body: { token, slug },
         method: 'post',
       });
-  
-      if(status.value === 'error') {
+
+      if (status.value === 'error') {
         onGenericError({ error: t('shared.genericError') });
       } else {
         propertyBySlug.value = data.value?.property || null;
       }
-    } catch {
-    } finally {
-      isLoading.value = false;
-    }
-  }
-  
-  async function getAgencyBySlug(slug: Agency['slug'] | null) {
-    try {
-      if (!slug) return;
-  
-      isLoading.value = true;
-  
-      await initHelloClient();
-  
-      const token = localStorage.getItem(localStorageTokenKey);
-  
-      const { status, data } = await useFetch<{ agency: Agency}>(generateLivelyEndpoint('agency/'), {
-        onResponseError: onGenericError,
-        onRequestError: onGenericError,
-        body: { token, slug },
-        method: 'post',
-      });
-  
-      if(status.value === 'error') {
-        onGenericError({ error: t('shared.genericError') });
-      } else {
-        agencyBySlug.value = data.value?.agency || null;
-      }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }
   }
 
-  async function generatePropertyRequest({
-    slug,
-    message,
-    email,
-    name,
-  }: PropertyRequestForm) {
+  async function getAgencyBySlug(slug: Agency['slug'] | null) {
+    try {
+      if (!slug) return;
+
+      isLoading.value = true;
+
+      await initHelloClient();
+
+      const token = localStorage.getItem(localStorageTokenKey);
+
+      const { status, data } = await useFetch<{ agency: Agency }>(generateLivelyEndpoint('agency/'), {
+        onResponseError: onGenericError,
+        onRequestError: onGenericError,
+        body: { token, slug },
+        method: 'post',
+      });
+
+      if (status.value === 'error') {
+        onGenericError({ error: t('shared.genericError') });
+      } else {
+        agencyBySlug.value = data.value?.agency || null;
+      }
+    } catch (error: unknown) {
+      console.error({ error });
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  async function generatePropertyRequest({ slug, message, email, name }: PropertyRequestForm) {
     try {
       isLoading.value = true;
-  
+
       await initHelloClient();
-  
+
       const token = localStorage.getItem(localStorageTokenKey);
-  
+
       const { status } = await useFetch(generateLivelyEndpoint('property/request'), {
         body: { token, slug, message, email, name },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
       });
-  
-      if(status.value === 'success') {
+
+      if (status.value === 'success') {
         toast.add({
           title: t('form.requestSucceeded'),
-          icon: "i-heroicons-check-circle",
+          icon: 'i-heroicons-check-circle',
           color: 'green',
-        })
+        });
       } else {
         onGenericError({ error: t('shared.genericError') });
       }
-    } catch {
+    } catch (error: unknown) {
+      console.error({ error });
     } finally {
       isLoading.value = false;
     }

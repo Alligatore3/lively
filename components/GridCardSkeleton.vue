@@ -15,9 +15,9 @@
       </svg>
     </div>
 
-    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4"></div>
+    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4" />
 
-    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-400" />
     <span class="sr-only">Loading...</span>
   </div>
 </template>

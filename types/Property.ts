@@ -36,4 +36,4 @@ export type Property = {
   kitchen: number;
   washlet: number;
   active: number;
-}
+};

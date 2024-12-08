@@ -19,7 +19,7 @@ const propertyImage = computed<string>(() => `url('${property.images[0]}')`);
   >
     <slot name="avatar" />
     <div class="w-full h-full flex flex-col">
-      <div class="flex-grow"></div>
+      <div class="flex-grow" />
       <div class="flex-grow flex flex-col justify-end p-4 bg-gradient-to-t from-black">
         <p class="font-bold text-xl text-white">¥{{ property.price }}</p>
         <p class="font-semibold text-white">{{ property.title }}</p>
