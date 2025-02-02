@@ -1,18 +1,103 @@
 <script setup lang="ts">
-import { useLivelyStore } from '@/stores/useLivelyStore';
+import type { GetPropertyListParameters } from '@/types/GetPropertyListParameters';
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
+import { useLivelyStore } from '@/stores/useLivelyStore';
+import { ROUTES } from '@/constants';
 
-const { getAgencyList, agencyList, isLoading } = useLivelyStore();
+const propertyLocation = ref<number | undefined>(undefined);
 
-onMounted(() => {
+const route = useRoute();
+
+const router = useRouter();
+
+const { propertyLocationList: locations, getAgencyList, agencyList, isLoading } = useLivelyStore();
+
+async function onFilterChange(params?: { location: GetPropertyListParameters['location'] }) {
+  const query = { ...route.query, ...params };
+
+  await navigateTo({
+    path: ROUTES.AGENCIES,
+    query,
+  });
+}
+
+const onFiltersReset = async () => {
+  await onFilterChange();
+
+  // Remove all other filters if they exists
+  router.push({ query: {} });
+
+  propertyLocation.value = undefined;
+
   if (isLoading.value) return;
+
   getAgencyList();
-});
+};
+
+function onPropertyLocationChange() {
+  const location = Number(propertyLocation.value);
+  onFilterChange({ location });
+}
+
+const fetchAcencyListByLocation = async () => {
+  if (isLoading.value) return;
+
+  const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
+  getAgencyList(locationId);
+};
+
+watch(propertyLocation, onPropertyLocationChange);
+
+onMounted(fetchAcencyListByLocation);
 </script>
 
 <template>
   <ContentWithSidebar>
-    <template #sidebar />
+    <template #sidebar>
+      <div class="flex flex-col gap-8 px-2">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row justify-between align-center">
+            <h3 class="text-lg font-bold">
+              {{ $t('filters.agencies') }}
+            </h3>
+
+            <CaptionText>
+              {{ $t('filters.results', { count: agencyList.length }) }}
+            </CaptionText>
+          </div>
+
+          <USelectMenu
+            v-model="propertyLocation"
+            :options="locations"
+            value-attribute="id"
+            option-attribute="name"
+            :disabled="isLoading || locations.length === 0"
+            :placeholder="$t('home.form.location.placeholder')"
+          />
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-2">
+          <button
+            class="w-full lg:w-1/2 border py-2 font-semibold rounded"
+            :disabled="isLoading"
+            @click="onFiltersReset"
+          >
+            {{ $t('shared.reset') }}
+          </button>
+
+          <button
+            class="w-full lg:w-1/2 bg-black text-white font-semibold py-2 rounded flex align-center justify-center"
+            :disabled="isLoading"
+            @click="fetchAcencyListByLocation"
+          >
+            <SpinnerLoader v-if="isLoading" classes="w-[24px] after:w-[24px] h-[24px] after:h-[24px] after:border" />
+            <span v-else>
+              {{ $t('shared.submit') }}
+            </span>
+          </button>
+        </div>
+      </div>
+    </template>
 
     <template #content>
       <GridCardsSkeleton v-if="isLoading" />

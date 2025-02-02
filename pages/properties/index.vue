@@ -22,11 +22,7 @@ const hasFurnished = ref<boolean>(false);
 
 const queryPropertyType = computed(() => generatePropertyQueryType(route));
 
-const { getPropertyList, propertyList, isLoading: isPropertyListLoading } = useLivelyStore();
-
-const { getLocationList, propertyLocationList: locations, isLoading: isLocationListLoading } = useLivelyStore();
-
-const isLoading = computed(() => isPropertyListLoading.value || isLocationListLoading.value);
+const { propertyLocationList: locations, getPropertyList, getLocationList, propertyList, isLoading } = useLivelyStore();
 
 async function onFilterChange(params: GetPropertyListParameters) {
   const query = { ...route.query, ...params };

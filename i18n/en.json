@@ -75,6 +75,7 @@
   },
   "filters": {
     "locations": "Locations",
+    "agencies": "Agencies",
     "price": "Price",
     "squareMeters": "Square meters",
     "rooms": "Rooms",
