@@ -10,7 +10,7 @@ const route = useRoute();
 
 const router = useRouter();
 
-const { propertyLocationList: locations, getAgencyList, agencyList, isLoading } = useLivelyStore();
+const { propertyLocationList: locations, getLocationList, getAgencyList, agencyList, isLoading } = useLivelyStore();
 
 async function onFilterChange(params?: { location: GetPropertyListParameters['location'] }) {
   const query = { ...route.query, ...params };
@@ -39,16 +39,21 @@ function onPropertyLocationChange() {
   onFilterChange({ location });
 }
 
-const fetchAcencyListByLocation = async () => {
+const onAgenciesPageMount = async () => {
   if (isLoading.value) return;
 
+  if (!locations.value.length) {
+    // @todo: we have to unlink this from the properties page
+    await getLocationList('rent');
+  }
+
   const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
-  getAgencyList(locationId);
+  await getAgencyList(locationId);
 };
 
 watch(propertyLocation, onPropertyLocationChange);
 
-onMounted(fetchAcencyListByLocation);
+onMounted(onAgenciesPageMount);
 </script>
 
 <template>
@@ -88,7 +93,7 @@ onMounted(fetchAcencyListByLocation);
           <button
             class="w-full lg:w-1/2 bg-black text-white font-semibold py-2 rounded flex align-center justify-center"
             :disabled="isLoading"
-            @click="fetchAcencyListByLocation"
+            @click="onAgenciesPageMount"
           >
             <SpinnerLoader v-if="isLoading" classes="w-[24px] after:w-[24px] h-[24px] after:h-[24px] after:border" />
             <span v-else>
