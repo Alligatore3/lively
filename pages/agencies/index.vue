@@ -72,6 +72,8 @@ const onAgenciesPageMount = async () => {
     const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
     const search = agencyName.value;
 
+    onFilterChange({ location: locationId, search });
+
     await getAgencyList({ search, locationId });
   } catch (error) {
     console.error(error);
