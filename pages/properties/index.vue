@@ -6,6 +6,7 @@ import type { GetPropertyListParameters } from '@/types/GetPropertyListParameter
 import type { PropertyType } from '@/types/PropertyType';
 import { useLivelyStore } from '@/stores/useLivelyStore';
 import EntityRanges from '@/components/EntityRanges';
+import { ROUTES } from '@/constants';
 
 const route = useRoute();
 
