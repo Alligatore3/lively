@@ -137,7 +137,7 @@ onMounted(onAgenciesPageMount);
       <GridCardsSkeleton v-if="isLoading" />
 
       <ContentGridListSwitcher v-else :list-lenght="agencyList.length">
-        <template v-if="agencyList.length > 0" #loop-list>
+        <template #loop-list>
           <template v-if="agencyList.length > 0">
             <li v-for="agency in agencyList" :key="agency.id">
               <NuxtLink :to="{ name: 'agencies-slug', params: { slug: agency.slug } }">
