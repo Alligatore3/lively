@@ -10,7 +10,9 @@ const route = useRoute();
 
 const router = useRouter();
 
-const { propertyLocationList: locations, getLocationList, getAgencyList, agencyList, isLoading } = useLivelyStore();
+const isLoading = ref<boolean>(false);
+
+const { propertyLocationList: locations, getLocationList, getAgencyList, agencyList } = useLivelyStore();
 
 async function onFilterChange(params?: { location: GetPropertyListParameters['location'] }) {
   const query = { ...route.query, ...params };
@@ -22,16 +24,24 @@ async function onFilterChange(params?: { location: GetPropertyListParameters['lo
 }
 
 const onFiltersReset = async () => {
-  await onFilterChange();
+  try {
+    if (isLoading.value) return;
 
-  // Remove all other filters if they exists
-  router.push({ query: {} });
+    isLoading.value = true;
 
-  propertyLocation.value = undefined;
+    await onFilterChange();
 
-  if (isLoading.value) return;
+    // Remove all other filters if they exists
+    router.push({ query: {} });
 
-  getAgencyList();
+    propertyLocation.value = undefined;
+
+    await getAgencyList();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 function onPropertyLocationChange() {
@@ -40,15 +50,23 @@ function onPropertyLocationChange() {
 }
 
 const onAgenciesPageMount = async () => {
-  if (isLoading.value) return;
+  try {
+    if (isLoading.value) return;
 
-  if (!locations.value.length) {
-    // @todo: we have to unlink this from the properties page
-    await getLocationList('rent');
+    isLoading.value = true;
+
+    if (!locations.value.length) {
+      // @todo: we have to unlink this from the properties page
+      await getLocationList('rent');
+    }
+
+    const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
+    await getAgencyList(locationId);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
   }
-
-  const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
-  await getAgencyList(locationId);
 };
 
 watch(propertyLocation, onPropertyLocationChange);
