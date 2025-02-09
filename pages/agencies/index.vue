@@ -84,7 +84,8 @@ onMounted(onAgenciesPageMount);
               {{ $t('filters.agencies') }}
             </h3>
 
-            <CaptionText>
+            <USkeleton v-if="isLoading" class="h-2 w-16 bg-gray-200 my-auto" />
+            <CaptionText v-else>
               {{ $t('filters.results', { count: agencyList.length }) }}
             </CaptionText>
           </div>
