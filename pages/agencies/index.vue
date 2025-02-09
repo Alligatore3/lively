@@ -2,6 +2,7 @@
 import type { GetPropertyListParameters } from '@/types/GetPropertyListParameters';
 import ContentGridListSwitcher from '@/components/ContentGridListSwitcher';
 import { useLivelyStore } from '@/stores/useLivelyStore';
+import type { Agency } from '@/types/Agency';
 import { ROUTES } from '@/constants';
 
 const propertyLocation = ref<number | undefined>(undefined);
@@ -12,9 +13,11 @@ const router = useRouter();
 
 const isLoading = ref<boolean>(false);
 
+const agencyName = ref<Agency['name'] | undefined>(undefined);
+
 const { propertyLocationList: locations, getLocationList, getAgencyList, agencyList } = useLivelyStore();
 
-async function onFilterChange(params?: { location: GetPropertyListParameters['location'] }) {
+async function onFilterChange(params?: { search?: string; location: GetPropertyListParameters['location'] }) {
   const query = { ...route.query, ...params };
 
   await navigateTo({
@@ -35,8 +38,9 @@ const onFiltersReset = async () => {
     router.push({ query: {} });
 
     propertyLocation.value = undefined;
+    agencyName.value = undefined;
 
-    await getAgencyList();
+    await getAgencyList({});
   } catch (error) {
     console.error(error);
   } finally {
@@ -46,7 +50,9 @@ const onFiltersReset = async () => {
 
 function onPropertyLocationChange() {
   const location = Number(propertyLocation.value);
-  onFilterChange({ location });
+  const search = agencyName.value;
+
+  onFilterChange({ location, search });
 }
 
 const onAgenciesPageMount = async () => {
@@ -61,7 +67,9 @@ const onAgenciesPageMount = async () => {
     }
 
     const locationId = propertyLocation.value ? Number(propertyLocation.value) : undefined;
-    await getAgencyList(locationId);
+    const search = agencyName.value;
+
+    await getAgencyList({ search, locationId });
   } catch (error) {
     console.error(error);
   } finally {
@@ -98,6 +106,8 @@ onMounted(onAgenciesPageMount);
             :disabled="isLoading || locations.length === 0"
             :placeholder="$t('home.form.location.placeholder')"
           />
+
+          <UInput v-model="agencyName" variant="outline" :placeholder="$t('home.form.search.placeholder')" />
         </div>
 
         <div class="flex flex-col lg:flex-row gap-2">

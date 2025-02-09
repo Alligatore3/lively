@@ -40,6 +40,9 @@
         "label": "Location",
         "placeholder": "Choose a city/region"
       },
+      "search": {
+        "placeholder": "Search for agency name"
+      },
       "priceRange": {
         "label": "Price range",
         "placeholder": "300-700$"

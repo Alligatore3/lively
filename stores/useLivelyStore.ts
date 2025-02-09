@@ -123,7 +123,13 @@ export function useLivelyStore() {
     }
   }
 
-  async function getAgencyList(locationId?: number) {
+  async function getAgencyList({
+    search,
+    locationId,
+  }: {
+    search?: Agency['name']; 
+    locationId?: number
+  }) {
     try {
       isLoading.value = true;
 
@@ -132,7 +138,7 @@ export function useLivelyStore() {
       const token = localStorage.getItem(localStorageTokenKey);
 
       const { status, data } = await useFetch<{ agencies: Agency[] }>(generateLivelyEndpoint('agency/list'), {
-        body: { token, location: locationId },
+        body: { token, location: locationId, search },
         onResponseError: onGenericError,
         onRequestError: onGenericError,
         method: 'post',
