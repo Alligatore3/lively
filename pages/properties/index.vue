@@ -12,6 +12,8 @@ const route = useRoute();
 
 const router = useRouter();
 
+const isLoading = ref<boolean>(false);
+
 const propertyLocation = ref<number | undefined>(undefined);
 
 const hasTatami = ref<boolean>(false);
@@ -22,7 +24,7 @@ const hasFurnished = ref<boolean>(false);
 
 const queryPropertyType = computed(() => generatePropertyQueryType(route));
 
-const { propertyLocationList: locations, getPropertyList, getLocationList, propertyList, isLoading } = useLivelyStore();
+const { propertyLocationList: locations, getPropertyList, getLocationList, propertyList } = useLivelyStore();
 
 async function onFilterChange(params: GetPropertyListParameters) {
   const query = { ...route.query, ...params };
@@ -34,34 +36,51 @@ async function onFilterChange(params: GetPropertyListParameters) {
 }
 
 const fetchPropertyListByType = async () => {
-  await onFilterChange({ type: queryPropertyType.value });
+  try {
+    isLoading.value = true;
+    await onFilterChange({ type: queryPropertyType.value });
 
-  const params = route.query as unknown as GetPropertyListParameters;
-  getPropertyList(params);
+    const params = route.query as unknown as GetPropertyListParameters;
+    await getPropertyList(params);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const onFiltersReset = async () => {
-  const queryValues = Object.values(route.query);
-  if (queryValues.length === 1 && queryValues[0] === DEFAULT_PROPERTY_TYPE) return;
+  try {
+    if (isLoading.value) return;
 
-  const type = queryPropertyType.value;
-  await onFilterChange({ type });
+    isLoading.value = true;
 
-  // Remove all other filters if they exists
-  router.push({ query: { type } });
+    const queryValues = Object.values(route.query);
+    if (queryValues.length === 1 && queryValues[0] === DEFAULT_PROPERTY_TYPE) return;
+    debugger;
+    const type = queryPropertyType.value;
+    await onFilterChange({ type });
 
-  propertyLocation.value = undefined;
+    // Remove all other filters if they exists
+    router.push({ query: { type } });
 
-  hasFurnished.value = false;
-  hasKitchen.value = false;
-  hasTatami.value = false;
+    propertyLocation.value = undefined;
 
-  if (isLoading.value) return;
+    hasFurnished.value = false;
+    hasKitchen.value = false;
+    hasTatami.value = false;
 
-  getPropertyList({ type });
+    getPropertyList({ type });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 function onPropertyLocationChange() {
+  isLoading.value = false;
+
   const location = Number(propertyLocation.value);
   if (!location) return;
 
@@ -70,17 +89,23 @@ function onPropertyLocationChange() {
   onFilterChange({ location, type });
 }
 
-function onPropertiesPageMount() {
-  fetchPropertyListByType();
+async function onPropertiesPageMount() {
+  try {
+    isLoading.value = true;
 
-  propertyLocation.value = Number(route.query.location) || undefined;
+    propertyLocation.value = Number(route.query.location) || undefined;
 
-  if (!locations.value.length) {
-    getLocationList(queryPropertyType.value);
+    if (!locations.value.length) {
+      await getLocationList(queryPropertyType.value);
+    }
+
+    await fetchPropertyListByType();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
   }
 }
-
-watch(propertyLocation, onPropertyLocationChange);
 
 const onTatamiChange = (value: boolean) => {
   const tatami = value ? 1 : 0;
@@ -103,6 +128,8 @@ const onFurnishedChange = (value: boolean) => {
   onFilterChange({ furnished, type });
 };
 
+watch(propertyLocation, onPropertyLocationChange);
+
 onMounted(onPropertiesPageMount);
 </script>
 
@@ -124,7 +151,8 @@ onMounted(onPropertiesPageMount);
               {{ $t('filters.locations') }}
             </h3>
 
-            <CaptionText>
+            <USkeleton v-if="isLoading" class="h-2 w-16 bg-gray-200 my-auto" />
+            <CaptionText v-else>
               {{ $t('filters.results', { count: propertyList.length }) }}
             </CaptionText>
           </div>
