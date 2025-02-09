@@ -32,6 +32,9 @@ const onFiltersReset = async () => {
 
     isLoading.value = true;
 
+    // Stop user to reset more than one time.
+    if (Object.keys(route.query).length === 0) return;
+
     await onFilterChange();
 
     // Remove all other filters if they exists
@@ -49,7 +52,7 @@ const onFiltersReset = async () => {
 };
 
 function onPropertyLocationChange() {
-  const location = Number(propertyLocation.value);
+  const location = propertyLocation.value ? Number(propertyLocation.value) : undefined;
   const search = agencyName.value;
 
   onFilterChange({ location, search });

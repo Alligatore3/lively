@@ -55,9 +55,9 @@ const onFiltersReset = async () => {
 
     isLoading.value = true;
 
-    const queryValues = Object.values(route.query);
-    if (queryValues.length === 1 && queryValues[0] === DEFAULT_PROPERTY_TYPE) return;
-    debugger;
+    // Stop user to reset more than one time.
+    if (Object.keys(route.query).length === 1 && route.query.type) return;
+
     const type = queryPropertyType.value;
     await onFilterChange({ type });
 
