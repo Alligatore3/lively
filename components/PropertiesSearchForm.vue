@@ -48,7 +48,7 @@ const formId = 'home-search-form';
 
           <UDivider class="w-px h-full py-2" orientation="vertical" />
 
-          <div class="flex flex-1 flex-row md:flex-col w-full px-4 md:px-0 justify-between">
+          <div class="flex flex-1 flex-col gap-3 md:gap-0 w-full px-4 md:px-0 justify-between">
             <label for="location" class="font-semibold">
               {{ $t('home.form.location.label') }}
             </label>
@@ -69,7 +69,7 @@ const formId = 'home-search-form';
 
           <UDivider class="w-px h-full py-2" orientation="vertical" />
 
-          <div class="flex flex-1 flex-row md:flex-col w-full px-4 md:px-0 justify-between">
+          <div class="flex flex-1 flex-col gap-3 md:gap-0 w-full px-4 md:px-0 justify-between">
             <label for="priceRange" class="font-semibold">
               {{ $t('home.form.priceRange.label') }}
             </label>

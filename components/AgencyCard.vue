@@ -21,7 +21,7 @@ const { agency } = defineProps<Props>();
     </div>
 
     <div class="text-center">
-      <h2 class="font-bold text-xl">{{ agency.name }}</h2>
+      <h2 class="max-w-[250px] font-bold text-xl truncate mx-auto">{{ agency.name }}</h2>
 
       <CaptionText class="mt-2 mb-4">
         {{ $t('agencies.propertiesCount', { count: agency.properties?.length ?? 0 }) }}

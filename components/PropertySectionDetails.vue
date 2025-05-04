@@ -97,7 +97,7 @@ function openModal() {
 
     <div class="flex flex-col md:flex-row gap-4">
       <div class="flex md:w-1/2 flex-col gap-3">
-        <h3 class="text-7xl">¥{{ property.price }}</h3>
+        <h3 class="text-5xl md:text-7xl">¥{{ property.price }}</h3>
 
         <h1 class="text-2xl my-2">{{ property.title }}</h1>
 

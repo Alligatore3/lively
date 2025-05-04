@@ -13,7 +13,7 @@ const propertyImages = computed<string[]>(() => property.images.filter(isString)
 <template>
   <section id="property-images" class="relative">
     <UButton
-      class="top-4 left-4 absolute rounded-md px-5 py-3 font-semibold z-10"
+      class="hidden lg:flex absolute top-4 left-4 rounded-md px-5 py-3 font-semibold z-10"
       icon="i-heroicons-arrow-left-20-solid"
       :label="$t('properties.back')"
       :trailing="false"
@@ -32,5 +32,18 @@ const propertyImages = computed<string[]>(() => property.images.filter(isString)
     >
       <img :src="item" class="w-full" draggable="false" />
     </UCarousel>
+
+    <div class="p-2 block lg:hidden">
+      <UButton
+        class="rounded-md font-semibold w-full"
+        icon="i-heroicons-arrow-left-20-solid"
+        :label="$t('properties.back')"
+        :trailing="false"
+        color="white"
+        variant="solid"
+        size="sm"
+        @click="$router.back()"
+      />
+    </div>
   </section>
 </template>
